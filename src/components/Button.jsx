@@ -2,6 +2,7 @@ import { ChevronLeft, ChevronRight } from "react-bootstrap-icons";
 import PropTypes from 'prop-types';
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { ShinyIcon } from "./Icon";
 
 export const PokeButton = (props) => {
     const { type, onClick, disabled, currentId } = props;
@@ -38,7 +39,7 @@ export const PokeButton = (props) => {
     }, [id]);
 
     return (
-        <button className='w-24 h-40 bg-neutral-600 flex flex-col items-center justify-center rounded-lg border-2 border-neutral-700' onClick={onClick} disabled={disabled}>
+        <button type="button" className='w-24 h-40 bg-neutral-600 flex flex-col items-center justify-center rounded-lg border-2 border-neutral-700' onClick={onClick} disabled={disabled}>
           <div className="w-[40px] h-[40px] overflow-visible flex items-center justify-center">
             {loading ? <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-neutral-300"></div> : <img className='scale-[1.5]' src={pokemon?.sprites.front_default} alt="" />}
           </div>
@@ -52,6 +53,17 @@ export const PokeButton = (props) => {
 PokeButton.propTypes = {
     type: PropTypes.string.isRequired,
     onClick: PropTypes.func.isRequired,
-    disabled: PropTypes.bool.isRequired,
+    disabled: PropTypes.bool,
     currentId: PropTypes.number.isRequired,
+}
+
+export const ShinyButton = (props) => {
+
+  const { isShiny, onClick, className } = props;
+
+  return (
+    <button type="button" onClick= {onClick} className={`${className} w-10 h-10 flex justify-center items-center rounded-full transition-all hover:scale-110 active:scale-100 ${!isShiny ? "bg-neutral-200" : "bg-yellow-300"}`}>
+      <ShinyIcon className={`${!isShiny ? "fill-neutral-400" : "fill-yellow-50"}`} />
+    </button>
+  );
 }

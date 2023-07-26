@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios';
 import { PokeAbility, PokePolygonStat, PokeRangeStat, PokeType } from './components/PokeInfo';
 import { RevolvingDot } from 'react-loader-spinner';
-import { PokeButton } from './components/Button';
+import { PokeButton, ShinyButton } from './components/Button';
 
 function App() {
   const [pokemon, setPokemon] = useState(null);
@@ -50,7 +50,7 @@ function App() {
         <div className="w-24"></div>
       )}
       <div className='flex gap-5 items-center justify-center'>
-        <div className='h-[50vh] w-[30rem] relative flex flex-col items-center justify-between border-2 border-neutral-700 rounded-xl'>
+        <div className='h-[30rem] w-[30rem] relative flex flex-col items-center justify-between border-2 border-neutral-700 rounded-xl'>
           <div className='relative flex flex-col items-center'>
             <h1 className='text-[3rem] text-neutral-50 font-semibold capitalize drop-shadow-lg'>{pokemon?.name}</h1>
             <h3 className='text-sm font-semibold text-neutral-400 drop-shadow-lg'>#{pokemon?.id.toString().padStart(3, '0')}</h3>
@@ -76,9 +76,10 @@ function App() {
               />
             </div>
           )}
-          <button onClick={() => setShiny(!shiny)} className=''>{!shiny ? "Shiny" : "Default"}</button>
+          {/* <button onClick={() => setShiny(!shiny)} className=''>{!shiny ? "Shiny" : "Default"}</button> */}
+          <ShinyButton isShiny={shiny} onClick={() => setShiny(!shiny)} className="self-end" />
         </div>
-        <div className='h-[50vh] w-[50vw] flex flex-col border-2 bg-neutral-700 border-neutral-700 rounded-xl overflow-hidden'>
+        <div className='h-[30rem] w-[50vw] flex flex-col border-2 bg-neutral-700 border-neutral-700 rounded-xl overflow-hidden'>
           <div className='px-3 py-1 bg-red-700 flex items-center gap-2'>
             <div className='text-[1.5rem] text-neutral-50 capitalize'>
               {pokemon?.name}
