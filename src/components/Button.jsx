@@ -67,3 +67,9 @@ export const ShinyButton = (props) => {
     </button>
   );
 }
+
+ShinyButton.propTypes = {
+  isShiny: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired,
+  className: PropTypes.string,
+}

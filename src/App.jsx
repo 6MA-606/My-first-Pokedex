@@ -50,36 +50,36 @@ function App() {
         <div className="w-24"></div>
       )}
       <div className='flex gap-5 items-center justify-center'>
-        <div className='h-[30rem] w-[30rem] relative flex flex-col items-center justify-between border-2 border-neutral-700 rounded-xl'>
-          <div className='relative flex flex-col items-center'>
+        <div className={`h-[30rem] w-[30rem] relative border-2 bg-neutral-700 border-neutral-600 rounded-xl`}>
+          <div className='absolute w-full flex flex-col items-center z-10'>
             <h1 className='text-[3rem] text-neutral-50 font-semibold capitalize drop-shadow-lg'>{pokemon?.name}</h1>
             <h3 className='text-sm font-semibold text-neutral-400 drop-shadow-lg'>#{pokemon?.id.toString().padStart(3, '0')}</h3>
           </div>
-          {loading ? (
-            <div className='w-full h-full absolute -z-10 flex items-center justify-center'>
+          <div className='w-full h-full absolute flex items-center justify-center'>
+            {loading ? (
               <RevolvingDot
-                radius="70"
-                color="#ff0000"
-                secondaryColor=''
-                ariaLabel="revolving-dot-loading"
-                wrapperStyle={{}}
-                wrapperClass=""
-                visible={true}
+              radius="70"
+              color="#ff0000"
+              secondaryColor=''
+              ariaLabel="revolving-dot-loading"
+              wrapperStyle={{}}
+              wrapperClass=""
+              visible={true}
               /> 
-            </div>
-          ) : (
-            <div className='w-full h-full absolute -z-10 flex items-center justify-center'>
-              <img
-                className='w-[90%] h-[90%]'
-                src={!shiny ? pokemon?.sprites.other.home.front_default : pokemon?.sprites.other.home.front_shiny}
-                alt={pokemon?.name}
-              />
-            </div>
-          )}
-          {/* <button onClick={() => setShiny(!shiny)} className=''>{!shiny ? "Shiny" : "Default"}</button> */}
-          <ShinyButton isShiny={shiny} onClick={() => setShiny(!shiny)} className="self-end" />
+              ) : (
+                <>
+                  <img
+                  className='w-[90%] h-[90%] z-10'
+                  src={!shiny ? pokemon?.sprites.other.home.front_default : pokemon?.sprites.other.home.front_shiny}
+                  alt={pokemon?.name}
+                  />
+                  <div className='absolute bottom-0 w-[80%] h-[20%] bg-gradient-radial opacity-40 rounded-[100%]'></div>
+                </>
+              )}
+          </div>
+          <ShinyButton isShiny={shiny} onClick={() => setShiny(!shiny)} className="absolute right-0 bottom-0" />
         </div>
-        <div className='h-[30rem] w-[50vw] flex flex-col border-2 bg-neutral-700 border-neutral-700 rounded-xl overflow-hidden'>
+        <div className='h-[30rem] w-[50vw] flex flex-col border-2 bg-neutral-700 border-neutral-600 rounded-xl overflow-hidden'>
           <div className='px-3 py-1 bg-red-700 flex items-center gap-2'>
             <div className='text-[1.5rem] text-neutral-50 capitalize'>
               {pokemon?.name}

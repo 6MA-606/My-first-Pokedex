@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(rgba(20,20,20,1) 40%, rgba(0,0,0,0) 70%)"
+      },
       colors: {
         transparent: "transparent",
         current: "currentColor",
