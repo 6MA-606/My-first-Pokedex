@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight } from "react-bootstrap-icons";
+import { ArrowUp, ChevronLeft, ChevronRight } from "react-bootstrap-icons";
 import PropTypes from 'prop-types';
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -73,3 +73,30 @@ ShinyButton.propTypes = {
   onClick: PropTypes.func.isRequired,
   className: PropTypes.string,
 }
+
+const BackToTopButton = () => {
+
+  const [show, setShow] = useState(false);
+  
+  const handleBackToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        setShow(true);
+      } else {
+        setShow(false);
+      }
+    });
+  }, []);
+
+  return (
+    <div className={`fixed bottom-10 right-10 bg-red-700 text-white text-2xl rounded-full p-5 cursor-pointer shadow ${show ? 'block' : 'hidden'}`} onClick={handleBackToTop}>
+      <ArrowUp />
+    </div>
+  );
+};
+
+export default BackToTopButton;

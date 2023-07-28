@@ -131,8 +131,9 @@ export const PokePolygonStat = (props) => {
       options={options}
       series={data}
       type="radar"
-      height={250}
-      width={250}
+      height={document.documentElement.clientWidth < 1500 ? "210" : "250"}
+      width={document.documentElement.clientWidth < 1500 ? "210" : "250"}
+      // className="flex items-center justify-center h-36 w-36"
     />
   );
 };
