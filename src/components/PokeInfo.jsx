@@ -55,12 +55,7 @@ export const PokeType = (props) => {
       <div
         className={`bg-type-${poketype} rounded w-[6em] h-[1.75em] uppercase font-semibold text-[0.875em] text-white flex items-center justify-center`}
       >
-        <div className="relative">
-          {/* <div className="translate-x-[0.09rem] translate-y-[0.09rem] text-black opacity-25">
-            {poketype}
-          </div> */}
-          <div className="text-white drop-shadow-text">{poketype}</div>
-        </div>
+        <div className="text-white drop-shadow-text">{poketype}</div>
       </div>
     </div>
   );
@@ -263,7 +258,7 @@ export const PokeEggGroups = (props) => {
       <span className="text-sm text-neutral-400 font-semibold">Egg Groups</span>
       <div className="capitalize flex gap-2 my-2">
         {eggGroups?.map((eggGroup, index) => (
-          <div key={index} className={`bg-egg-${eggGroup.name} rounded w-20 font-semibold text-sm text-white flex items-center justify-center`}>
+          <div key={index} className={`bg-egg-${eggGroup.name} rounded px-2 min-w-20 font-semibold text-sm text-white flex items-center justify-center`}>
             <div className="text-white drop-shadow-text">{eggGroup.name}</div>
           </div>
         ))}
@@ -278,39 +273,7 @@ PokeEggGroups.propTypes = {
 
 export const PokeEvoChain = (props) => {
 
-  const { species } = props;
-
-  const [loading, setLoading] = useState(false);
-  const [evolutionChain, setEvolutionChain] = useState(null);
-  
-  useEffect(() => {
-    
-    let abortController = new AbortController();
-
-    const fetchEvoChain = async () => {
-      setLoading(true);
-      try {
-        await axios.get(species?.evolution_chain?.url , {
-          signal: abortController.signal
-        }).then((res) => {
-          setEvolutionChain(res.data)
-          console.log(res.data)
-        });
-      } catch (error) {
-        if (!axios.isCancel(error)) {
-          console.error("Something went wrong, ", error);
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchEvoChain();
-
-    return () => {
-      abortController.abort();
-    };
-  }, [species]);
+  const { evolutionChain, loading } = props;
 
   return (
     <div className="">
@@ -322,7 +285,7 @@ export const PokeEvoChain = (props) => {
               <div className="text-sm text-neutral-300 font-semibold">Loading...</div>
             ) : (
               <div className="text-sm text-neutral-300 font-semibold flex gap-2">
-                <PokeEvoDiagram species={species} evoChain={evolutionChain} />
+                <PokeEvoDiagram evoChain={evolutionChain} />
               </div>
             )}
           </div>
@@ -333,7 +296,8 @@ export const PokeEvoChain = (props) => {
 };
 
 PokeEvoChain.propTypes = {
-  species: PropTypes.object,
+  evolutionChain: PropTypes.object,
+  loading: PropTypes.bool,
 };
 
 const PokeEvoDiagram = (props) => {
@@ -476,11 +440,10 @@ export const PokeCardMini = (props) => {
     const fetchPokeType = async () => {
       try {
         setLoading(true);
-        await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokeId}`, {
+        const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokeId}`, {
           signal: abortController.signal
-        }).then((res) => {
-          setPokemon(res.data);
         });
+        setPokemon(res.data);
       } catch (error) {
         if (!axios.isCancel(error)) console.error("Something went wrong, ", error);
       } finally {

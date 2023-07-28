@@ -6,7 +6,11 @@ import BackToTopButton, { PokeButton, PokeButtonMini, ShinyButton } from './comp
 
 function App() {
   const [pokemon, setPokemon] = useState(null);
+  const [nextPokemon, setNextPokemon] = useState(null);
+  const [previousPokemon, setPreviousPokemon] = useState(null);
   const [species, setSpecies] = useState(null);
+  const [evoUrl, setEvoUrl] = useState(null);
+  const [evolutionChain, setEvolutionChain] = useState(null);
   const [loading, setLoading] = useState(false);
   const [shiny, setShiny] = useState(false);
   const [id, setId] = useState(133);
@@ -20,14 +24,29 @@ function App() {
       try {
         setLoading(true);
 
-        await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`, {
+        let res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`, {
           signal: abortController.signal
-        }).then(response => setPokemon(response.data));
+        });
+        setPokemon(res.data);
 
-        await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${id}`, {
+        res = await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${id}`, {
           signal: abortController.signal
-        }).then(response => setSpecies(response.data));
+        });
+        setSpecies(res.data);
 
+        if (id < 905) {
+          res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id + 1}`, {
+            signal: abortController.signal
+          });
+          setNextPokemon(res.data);
+        }
+
+        if (id > 1) {
+          res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id - 1}`, {
+            signal: abortController.signal
+          });
+          setPreviousPokemon(res.data);
+        }
       } catch (error) {
         if (!axios.isCancel(error)) {
             console.error("Something went wrong, ", error);
@@ -45,6 +64,39 @@ function App() {
 
   useEffect(() => {
     if (species) {
+      let url = species.evolution_chain.url;
+      setEvoUrl(url);
+    }
+  }, [species]);
+
+  useEffect(() => {
+    if (evoUrl) {
+      let abortController = new AbortController();
+
+      const loadEvoChain = async () => {
+        try {
+          setLoading(true);
+          let res = await axios.get(evoUrl, {
+            signal: abortController.signal
+          });
+          setEvolutionChain(res.data);
+        } catch (error) {
+          if (!axios.isCancel(error)) {
+              console.error("Something went wrong, ", error);
+          }
+        } finally {
+          setLoading(false);
+        }
+      }
+
+      loadEvoChain();
+
+      return () => abortController.abort();
+    }
+  }, [evoUrl]);
+  
+  useEffect(() => {
+    if (species) {
       let flavor = species.flavor_text_entries.filter(entry => entry.language.name === "en");
       setDescription(flavor[flavor.length - 1].flavor_text);
     }
@@ -54,7 +106,7 @@ function App() {
     <div className='min-h-screen my-10 xl:my-0 flex flex-col xl:flex-row gap-6 justify-center items-center'>
       <div className="hidden xl:block">
         { id > 1 ? (
-          <PokeButton type="previous" currentId={id} onClick={() => setId(id - 1)} />
+          <PokeButton type="previous" pokemon={previousPokemon} onClick={() => setId(id - 1)} loading={loading} />
         ) : (
           <div className="w-24"></div>
         )}
@@ -63,7 +115,7 @@ function App() {
         <div className="flex gap-5 items-center">
           <div className="hidden sm:block xl:hidden">
             { id > 1 ? (
-              <PokeButton type="previous" currentId={id} onClick={() => setId(id - 1)} />
+              <PokeButton type="previous" pokemon={previousPokemon} onClick={() => setId(id - 1)} loading={loading} />
             ) : (
               <div className="w-24"></div>
             )}
@@ -126,12 +178,12 @@ function App() {
                 </fieldset>
                 <div className="flex sm:hidden justify-between">
                   { id < 905 ? (
-                    <PokeButtonMini type="previous" currentId={id} onClick={() => setId(id - 1)} />
+                    <PokeButtonMini type="previous" pokemon={previousPokemon} onClick={() => setId(id - 1)} loading={loading} />
                   ) : (
                     <div className="w-24"></div>
                   )}
                   { id < 905 ? (
-                    <PokeButtonMini type="next" currentId={id} onClick={() => setId(id + 1)} />
+                    <PokeButtonMini type="next" pokemon={nextPokemon} onClick={() => setId(id + 1)} loading={loading} />
                   ) : (
                     <div className="w-24"></div>
                   )}
@@ -141,7 +193,7 @@ function App() {
           </div>
           <div className="hidden sm:block xl:hidden">
             { id < 905 ? (
-              <PokeButton type="next" currentId={id} onClick={() => setId(id + 1)} />
+              <PokeButton type="next" pokemon={nextPokemon} onClick={() => setId(id + 1)} loading={loading} />
             ) : (
               <div className="w-24"></div>
             )}
@@ -192,13 +244,13 @@ function App() {
                 />
               </div>
             </fieldset>
-            <PokeEvoChain species={species} />
+            <PokeEvoChain evolutionChain={evolutionChain} loading={loading} />
           </div>
         </div>
       </div>
       <div className="hidden xl:block">
         { id < 905 ? (
-          <PokeButton type="next" currentId={id} onClick={() => setId(id + 1)} />
+          <PokeButton type="next" pokemon={nextPokemon} onClick={() => setId(id + 1)} loading={loading} />
         ) : (
           <div className="w-24"></div>
         )}
