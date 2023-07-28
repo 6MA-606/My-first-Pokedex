@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios';
 import { PokeAbility, PokeEggGroups, PokeEvoChain, PokePolygonStat, PokeRangeStat, PokeType } from './components/PokeInfo';
 import { RevolvingDot } from 'react-loader-spinner';
-import BackToTopButton, { PokeButton, ShinyButton } from './components/Button';
+import BackToTopButton, { PokeButton, PokeButtonMini, ShinyButton } from './components/Button';
 
 function App() {
   const [pokemon, setPokemon] = useState(null);
@@ -51,7 +51,7 @@ function App() {
   }, [species]);
 
   return (
-    <div className='min-h-screen flex flex-col xl:flex-row gap-6 justify-center items-center'>
+    <div className='min-h-screen m-10 flex flex-col xl:flex-row gap-6 justify-center items-center'>
       <div className="hidden xl:block">
         { id > 1 ? (
           <PokeButton type="previous" currentId={id} onClick={() => setId(id - 1)} />
@@ -61,7 +61,7 @@ function App() {
       </div>
       <div className='flex gap-5 items-center justify-center flex-col xl:flex-row'>
         <div className="flex gap-5 items-center">
-          <div className="block xl:hidden">
+          <div className="hidden sm:block xl:hidden">
             { id > 1 ? (
               <PokeButton type="previous" currentId={id} onClick={() => setId(id - 1)} />
             ) : (
@@ -94,7 +94,7 @@ function App() {
               </div>
               <ShinyButton isShiny={shiny} onClick={() => setShiny(!shiny)} className="absolute right-0 bottom-0" />
             </div>
-            <div className='h-[19rem] mt-[1rem] bg-neutral-700 border-2 border-neutral-600 rounded-xl'>
+            <div className='h-[21rem] sm:h-[19rem] mt-[1rem] bg-neutral-700 border-2 border-neutral-600 rounded-xl'>
               <div className='flex flex-col px-5 h-full gap-5'>
                 <div>
                   <div className="flex items-center justify-between">
@@ -124,10 +124,22 @@ function App() {
                   <legend className='text-sm text-neutral-400 font-semibold px-1 ml-1'>Description</legend>
                   <div className='text-sm text-neutral-300 font-semibold text-center whitespace-pre-wrap mb-4'>{description}</div>
                 </fieldset>
+                <div className="flex sm:hidden justify-between">
+                  { id < 905 ? (
+                    <PokeButtonMini type="previous" currentId={id} onClick={() => setId(id - 1)} />
+                  ) : (
+                    <div className="w-24"></div>
+                  )}
+                  { id < 905 ? (
+                    <PokeButtonMini type="next" currentId={id} onClick={() => setId(id + 1)} />
+                  ) : (
+                    <div className="w-24"></div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
-          <div className="block xl:hidden">
+          <div className="hidden sm:block xl:hidden">
             { id < 905 ? (
               <PokeButton type="next" currentId={id} onClick={() => setId(id + 1)} />
             ) : (
