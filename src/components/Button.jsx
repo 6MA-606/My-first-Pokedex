@@ -60,7 +60,6 @@ PokeButton.propTypes = {
 export const PokeButtonMini = (props) => {
   const { type, onClick, disabled, currentId } = props;
 
-  const [loading, setLoading] = useState(false);
   const [pokemon, setPokemon] = useState(null);
   const id = type == "next" ? currentId + 1 : currentId - 1;
 
@@ -70,8 +69,6 @@ export const PokeButtonMini = (props) => {
   
       const loadPokemon = async () => {
         try {
-          setLoading(true);
-  
           await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`, {
             signal: abortController.signal
           }).then(response => setPokemon(response.data));
@@ -80,8 +77,6 @@ export const PokeButtonMini = (props) => {
           if (!axios.isCancel(error)) {
               console.error("Something went wrong, ", error);
           }
-        } finally {
-          setLoading(false);
         }
       }
   
@@ -92,7 +87,7 @@ export const PokeButtonMini = (props) => {
   }, [id]);
 
   return (
-      <button type="button" className='w-[9rem] h-12 bg-neutral-600 flex items-center justify-between rounded-lg border-2 border-neutral-700' onClick={onClick} disabled={disabled}>
+      <button type="button" className='px-2 h-12 bg-neutral-600 flex items-center justify-between rounded-lg border-2 border-neutral-700' onClick={onClick} disabled={disabled}>
         <div className="text-neutral-300 text-2xl mx-1">{ type == "previous" ? <ChevronLeft /> : null }</div>
         <div className="flex justify-center items-baseline gap-1">
           <div className='text-neutral-300 capitalize'>{pokemon?.name}</div>

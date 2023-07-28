@@ -51,7 +51,7 @@ function App() {
   }, [species]);
 
   return (
-    <div className='min-h-screen m-10 flex flex-col xl:flex-row gap-6 justify-center items-center'>
+    <div className='min-h-screen my-10 xl:my-0 flex flex-col xl:flex-row gap-6 justify-center items-center'>
       <div className="hidden xl:block">
         { id > 1 ? (
           <PokeButton type="previous" currentId={id} onClick={() => setId(id - 1)} />

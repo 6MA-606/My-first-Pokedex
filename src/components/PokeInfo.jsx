@@ -2,8 +2,7 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
-import { ArrowLeft, ArrowRight } from "react-bootstrap-icons";
-import { RevolvingDot } from "react-loader-spinner";
+import { ArrowRight } from "react-bootstrap-icons";
 
 const dataColors = (type) => {
   switch (type) {
@@ -57,10 +56,10 @@ export const PokeType = (props) => {
         className={`bg-type-${poketype} rounded w-[6em] h-[1.75em] uppercase font-semibold text-[0.875em] text-white flex items-center justify-center`}
       >
         <div className="relative">
-          <div className="translate-x-[0.09rem] translate-y-[0.09rem] text-black opacity-25">
+          {/* <div className="translate-x-[0.09rem] translate-y-[0.09rem] text-black opacity-25">
             {poketype}
-          </div>
-          <div className="absolute -translate-y-5 text-white">{poketype}</div>
+          </div> */}
+          <div className="text-white drop-shadow-text">{poketype}</div>
         </div>
       </div>
     </div>
@@ -260,21 +259,16 @@ export const PokeEggGroups = (props) => {
   const { eggGroups } = props;
 
   return (
-    <div className="">
+    <>
       <span className="text-sm text-neutral-400 font-semibold">Egg Groups</span>
       <div className="capitalize flex gap-2 my-2">
         {eggGroups?.map((eggGroup, index) => (
           <div key={index} className={`bg-egg-${eggGroup.name} rounded w-20 font-semibold text-sm text-white flex items-center justify-center`}>
-            <div className="relative">
-              <div className="translate-x-[0.09rem] translate-y-[0.09rem] text-black opacity-25">
-                {eggGroup.name}
-              </div>
-              <div className="absolute -translate-y-5 text-white">{eggGroup.name}</div>
-            </div>
+            <div className="text-white drop-shadow-text">{eggGroup.name}</div>
           </div>
         ))}
       </div>
-    </div>
+    </>
   );
 };
 
@@ -344,7 +338,7 @@ PokeEvoChain.propTypes = {
 
 const PokeEvoDiagram = (props) => {
 
-  const { species, evoChain } = props;
+  const { evoChain } = props;
 
   const evoTrigger = (evoDetail, name) => {
 
@@ -505,7 +499,7 @@ export const PokeCardMini = (props) => {
   return (
     <div className="flex flex-col items-center gap-1 w-20">
       <div className="bg-neutral-800 w-20 h-20 flex flex-col justify-center items-center rounded-lg">
-        {!pokemon?.sprites?.front_default ? (
+        {!loading && !pokemon?.sprites?.front_default ? (
           <div className="w-20 h-20 flex justify-center items-center">
             <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-neutral-300"></div>
           </div>
