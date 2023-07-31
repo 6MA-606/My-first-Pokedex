@@ -13,7 +13,7 @@ function App() {
   const [evolutionChain, setEvolutionChain] = useState(null);
   const [loading, setLoading] = useState(false);
   const [shiny, setShiny] = useState(false);
-  const [id, setId] = useState(133);
+  const [id, setId] = useState(1);
   const [description, setDescription] = useState('');
 
   useEffect(() => {
@@ -146,7 +146,7 @@ function App() {
               </div>
               <ShinyButton isShiny={shiny} onClick={() => setShiny(!shiny)} className="absolute right-0 bottom-0" />
             </div>
-            <div className='h-[21rem] sm:h-[19rem] mt-[1rem] bg-neutral-700 border-2 border-neutral-600 rounded-xl'>
+            <div className='max-w-[30rem] h-auto pb-5 sm:pb-0 sm:h-[19rem] mt-[1rem] bg-neutral-700 border-2 border-neutral-600 rounded-xl'>
               <div className='flex flex-col px-5 h-full gap-5'>
                 <div>
                   <div className="flex items-center justify-between">
@@ -172,12 +172,12 @@ function App() {
                   </div>
                   <div className='bg-neutral-700 text-sm text-neutral-300 font-semibold ml-1 capitalize'>{species?.genera[7].genus}</div>
                 </div>
-                <fieldset className='min-h-[6.25rem] border-[1px] border-neutral-500 rounded-lg'>
+                <fieldset className='min-h-[6.25rem] px-4 border-[1px] border-neutral-500 rounded-lg'>
                   <legend className='text-sm text-neutral-400 font-semibold px-1 ml-1'>Description</legend>
                   <div className='text-sm text-neutral-300 font-semibold text-center whitespace-pre-wrap mb-4'>{description}</div>
                 </fieldset>
                 <div className="flex sm:hidden justify-between">
-                  { id < 905 ? (
+                  { id > 1 ? (
                     <PokeButtonMini type="previous" pokemon={previousPokemon} onClick={() => setId(id - 1)} loading={loading} />
                   ) : (
                     <div className="w-24"></div>
