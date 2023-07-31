@@ -127,7 +127,7 @@ export const PokePolygonStat = (props) => {
       type="radar"
       height={document.documentElement.clientWidth < 1500 ? "210" : "250"}
       width={document.documentElement.clientWidth < 1500 ? "210" : "250"}
-      // className="flex items-center justify-center h-36 w-36"
+      className="flex items-center justify-center translate-x-4"
     />
   );
 };
@@ -490,4 +490,20 @@ export const PokeCardMini = (props) => {
 PokeCardMini.propTypes = {
   pokeId: PropTypes.string,
   pokeName: PropTypes.string,
+};
+
+export const PokeDescription = (props) => {
+
+  const { description } = props;
+
+  return (
+  <fieldset className='min-h-[6.25rem] border-[1px] border-neutral-500 rounded-lg'>
+    <legend className='text-sm text-neutral-400 font-semibold px-1 ml-1'>Description</legend>
+    <div className='text-sm text-neutral-300 font-semibold text-center whitespace-pre-wrap mb-4'>{description}</div>
+  </fieldset>
+  );
+};
+
+PokeDescription.propTypes = {
+  description: PropTypes.string,
 };

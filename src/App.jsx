@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import axios from 'axios';
-import { PokeAbility, PokeEggGroups, PokeEvoChain, PokePolygonStat, PokeRangeStat, PokeType } from './components/PokeInfo';
+import { PokeAbility, PokeDescription, PokeEggGroups, PokeEvoChain, PokePolygonStat, PokeRangeStat, PokeType } from './components/PokeInfo';
 import { RevolvingDot } from 'react-loader-spinner';
 import BackToTopButton, { PokeButton, PokeButtonMini, ShinyButton } from './components/Button';
 
@@ -16,8 +16,7 @@ function App() {
   const [id, setId] = useState(1);
   const [description, setDescription] = useState('');
 
-  useEffect(() => {
-
+  const loadPokemon = useCallback(async () => {
     let abortController = new AbortController();
 
     const loadPokemon = async () => {
@@ -59,8 +58,11 @@ function App() {
     loadPokemon();
 
     return () => abortController.abort();
-
   }, [id]);
+
+  useEffect(() => {
+    loadPokemon();
+  }, [loadPokemon]);
 
   useEffect(() => {
     if (species) {
@@ -172,10 +174,7 @@ function App() {
                   </div>
                   <div className='bg-neutral-700 text-sm text-neutral-300 font-semibold ml-1 capitalize'>{species?.genera[7].genus}</div>
                 </div>
-                <fieldset className='min-h-[6.25rem] px-4 border-[1px] border-neutral-500 rounded-lg'>
-                  <legend className='text-sm text-neutral-400 font-semibold px-1 ml-1'>Description</legend>
-                  <div className='text-sm text-neutral-300 font-semibold text-center whitespace-pre-wrap mb-4'>{description}</div>
-                </fieldset>
+                <PokeDescription description={description} />
                 <div className="flex sm:hidden justify-between">
                   { id > 1 ? (
                     <PokeButtonMini type="previous" pokemon={previousPokemon} onClick={() => setId(id - 1)} loading={loading} />
