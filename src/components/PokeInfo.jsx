@@ -48,15 +48,19 @@ const dataColors = (type) => {
 };
 
 export const PokeType = (props) => {
-  const { poketype, size } = props;
+  const { poketype, size, loading } = props;
 
   return (
-    <div style={{ fontSize: (size || "1rem")}}>
-      <div
-        className={`bg-type-${poketype} rounded w-[6em] h-[1.75em] uppercase font-semibold text-[0.875em] text-white flex items-center justify-center`}
-      >
-        <div className="text-white drop-shadow-text">{poketype}</div>
-      </div>
+    <div style={{ fontSize: (`${size}rem` || "1rem")}}>
+      {loading ? (
+        <div className="bg-neutral-600 rounded w-[6em] h-[1.75em] text-[0.875em]"></div>
+      ) : (
+        <div className={`bg-type-${poketype} rounded w-[6em] h-[1.75em] uppercase font-semibold text-[0.875em] text-white flex items-center justify-center`}>
+          <div className="text-white drop-shadow-text">
+            {poketype}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
@@ -64,6 +68,7 @@ export const PokeType = (props) => {
 PokeType.propTypes = {
   poketype: PropTypes.string.isRequired,
   size: PropTypes.string,
+  loading: PropTypes.bool,
 };
 
 export const PokePolygonStat = (props) => {
@@ -480,7 +485,7 @@ export const PokeCardMini = (props) => {
       </div>
       <div className="flex gap-1 h-4">
         {pokemon?.types?.map((type, index) => (
-          <PokeType key={index} poketype={type.type.name} size={"0.6rem"} />
+          <PokeType key={index} poketype={type.type.name} size={"0.6"} />
         ))}
       </div>
     </div>

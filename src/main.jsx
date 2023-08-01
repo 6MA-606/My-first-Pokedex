@@ -1,10 +1,21 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom"
 import './index.css'
+import Pokedex from './App'
+import PokemonInfoPage from './pages/PokemonInfoPage.jsx'
+
+const router = createBrowserRouter([
+  { path: "/", element: <Pokedex /> },
+  { path: "/info", element: <PokemonInfoPage /> },
+  { path: "/info/:pokeId", element: <PokemonInfoPage pokeId={":pokeId"}/> },
+])
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </React.StrictMode>,
 )
