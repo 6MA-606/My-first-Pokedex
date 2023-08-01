@@ -48,16 +48,16 @@ const dataColors = (type) => {
 };
 
 export const PokeType = (props) => {
-  const { poketype, size, loading } = props;
+  const { pokeType, size, loading } = props;
 
   return (
     <div style={{ fontSize: (`${size}rem` || "1rem")}}>
-      {loading ? (
+      {loading || !pokeType ? (
         <div className="bg-neutral-600 rounded w-[6em] h-[1.75em] text-[0.875em]"></div>
       ) : (
-        <div className={`bg-type-${poketype} rounded w-[6em] h-[1.75em] uppercase font-semibold text-[0.875em] text-white flex items-center justify-center`}>
+        <div className={`bg-type-${pokeType} rounded w-[6em] h-[1.75em] uppercase font-semibold text-[0.875em] text-white flex items-center justify-center`}>
           <div className="text-white drop-shadow-text">
-            {poketype}
+            {pokeType}
           </div>
         </div>
       )}
@@ -66,8 +66,8 @@ export const PokeType = (props) => {
 };
 
 PokeType.propTypes = {
-  poketype: PropTypes.string.isRequired,
-  size: PropTypes.string,
+  pokeType: PropTypes.string,
+  size: PropTypes.number,
   loading: PropTypes.bool,
 };
 
@@ -485,7 +485,7 @@ export const PokeCardMini = (props) => {
       </div>
       <div className="flex gap-1 h-4">
         {pokemon?.types?.map((type, index) => (
-          <PokeType key={index} poketype={type.type.name} size={"0.6"} />
+          <PokeType key={index} pokeType={type.type.name} size={0.6} />
         ))}
       </div>
     </div>

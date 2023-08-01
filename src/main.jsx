@@ -10,6 +10,7 @@ import PokemonInfoPage from './pages/PokemonInfoPage.jsx'
 
 const router = createBrowserRouter([
   { path: "/", element: <Pokedex /> },
+  { path: "/:pokePage", element: <Pokedex pageNum={":pokePage"} />},
   { path: "/info", element: <PokemonInfoPage /> },
   { path: "/info/:pokeId", element: <PokemonInfoPage pokeId={":pokeId"}/> },
 ])

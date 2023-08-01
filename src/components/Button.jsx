@@ -64,7 +64,7 @@ ShinyButton.propTypes = {
   className: PropTypes.string,
 }
 
-const BackToTopButton = () => {
+export const BackToTopButton = () => {
 
   const [show, setShow] = useState(false);
   
@@ -89,4 +89,33 @@ const BackToTopButton = () => {
   );
 };
 
-export default BackToTopButton;
+export const PokePageButton = (props) => {
+
+  const { type, onClick, loading } = props;
+
+  return (
+    <button type="button" className='w-32 h-10 bg-neutral-600 flex items-center justify-between rounded-lg border-2 border-neutral-700 text-neutral-300' onClick={onClick} disabled={loading}>
+        { type == "next" ? (
+          <>
+            <div className="font-semibold w-32">{"Next"}</div>
+            <div className="text-2xl">
+              <ChevronRight />
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="text-2xl">
+              <ChevronLeft />
+            </div>
+            <div className="font-semibold w-32">{"Previous"}</div>
+          </>
+        )}
+    </button>
+  );
+}
+
+PokePageButton.propTypes = {
+  type: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
+}

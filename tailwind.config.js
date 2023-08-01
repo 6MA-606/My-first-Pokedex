@@ -10,7 +10,8 @@ export default {
         "text": "1.5px 1.5px 0px #0004",
       },
       backgroundImage: {
-        "gradient-radial": "radial-gradient(rgba(20,20,20,1) 40%, rgba(0,0,0,0) 70%)"
+        "gradient-radial": "radial-gradient(rgba(20,20,20,1) 40%, rgba(0,0,0,0) 70%)",
+        "pokeball": "url('/pokeball-bg.svg')",
       },
       colors: {
         transparent: "transparent",

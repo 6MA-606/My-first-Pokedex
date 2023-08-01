@@ -2,13 +2,8 @@ import { useCallback, useEffect, useState } from 'react'
 import axios from 'axios';
 import { PokeAbility, PokeDescription, PokeEggGroups, PokeEvoChain, PokePolygonStat, PokeRangeStat, PokeType } from '../components/PokeInfo';
 import { RevolvingDot } from 'react-loader-spinner';
-import BackToTopButton, { PokeButton, PokeButtonMini, ShinyButton } from '../components/Button';
-import PropTypes from "prop-types";
+import { BackToTopButton, PokeButton, PokeButtonMini, ShinyButton } from '../components/Button';
 import { useParams } from 'react-router-dom';
-
-PokemonInfoPage.propTypes = {
-  pokeId: PropTypes.number,
-};
 
 function PokemonInfoPage() {
 
