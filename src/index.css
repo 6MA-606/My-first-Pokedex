@@ -3,6 +3,37 @@
 @tailwind utilities;
 
 body {
+  height: 100vh;
   margin: 0;
   @apply bg-neutral-800;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #777;
+}
+
+html {
+  font-size: 16px;
+}
+
+@media (max-width: 1500px) {
+  html {
+    font-size: 12px;
+  }
 }

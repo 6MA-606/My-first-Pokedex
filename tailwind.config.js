@@ -6,6 +6,12 @@ export default {
   ],
   theme: {
     extend: {
+      dropShadow: {
+        "text": "1.5px 1.5px 0px #0004",
+      },
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(rgba(20,20,20,1) 40%, rgba(0,0,0,0) 70%)"
+      },
       colors: {
         transparent: "transparent",
         current: "currentColor",
@@ -28,7 +34,24 @@ export default {
           "dragon": "#7766ee",
           "dark": "#775544",
           "fairy": "#ee99ee",
-        }
+        },
+        "egg": {
+          "monster": "#d25064",
+          "water1": "#97b5fd",
+          "bug": "#aac22a",
+          "flying": "#b29afa",
+          "ground": "#e0c068",
+          "fairy": "#ffc8f0",
+          "plant": "#82d25a",
+          "humanshape": "#d29682",
+          "water3": "#5876be",
+          "mineral": "#7a6252",
+          "indeterminate": "#8a8a8a",
+          "water2": "#729afa",
+          "ditto": "#a664bf",
+          "dragon": "#7a42ff",
+          "no-eggs": "#333333",
+        },
       },
     },
   },
@@ -51,6 +74,21 @@ export default {
     "bg-type-dragon",
     "bg-type-dark",
     "bg-type-fairy",
+    "bg-egg-monster",
+    "bg-egg-water1",
+    "bg-egg-bug",
+    "bg-egg-flying",
+    "bg-egg-ground",
+    "bg-egg-fairy",
+    "bg-egg-plant",
+    "bg-egg-humanshape",
+    "bg-egg-water3",
+    "bg-egg-mineral",
+    "bg-egg-indeterminate",
+    "bg-egg-water2",
+    "bg-egg-ditto",
+    "bg-egg-dragon",
+    "bg-egg-no-eggs",
   ],
   plugins: [],
 }
