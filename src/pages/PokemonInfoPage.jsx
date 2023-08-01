@@ -178,7 +178,7 @@ function PokemonInfoPage() {
                   </div>
                   <div className='flex gap-2 items-center mt-1 mb-2'>
                     {pokemon?.types.map((type, index) => (
-                      <PokeType key={index} poketype={type.type.name} loading={loading} />
+                      <PokeType key={index} pokeType={type.type.name} loading={loading} />
                     ))}
                   </div>
                   <div className='bg-neutral-700 text-sm text-neutral-300 font-semibold ml-1 capitalize'>{species?.genera[7].genus}</div>

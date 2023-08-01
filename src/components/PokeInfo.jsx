@@ -51,8 +51,8 @@ export const PokeType = (props) => {
   const { pokeType, size, loading } = props;
 
   return (
-    <div style={{ fontSize: (`${size}rem` || "1rem")}}>
-      {loading || !pokeType ? (
+    <div style={{ fontSize: (`${size || 1}rem`)}}>
+      {loading ? (
         <div className="bg-neutral-600 rounded w-[6em] h-[1.75em] text-[0.875em]"></div>
       ) : (
         <div className={`bg-type-${pokeType} rounded w-[6em] h-[1.75em] uppercase font-semibold text-[0.875em] text-white flex items-center justify-center`}>
