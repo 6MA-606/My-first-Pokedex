@@ -3,11 +3,12 @@ import axios from 'axios';
 import { PokeAbility, PokeDescription, PokeEggGroups, PokeEvoChain, PokePolygonStat, PokeRangeStat, PokeType } from '../components/PokeInfo';
 import { RevolvingDot } from 'react-loader-spinner';
 import { BackToTopButton, PokeButton, PokeButtonMini, ShinyButton } from '../components/Button';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function PokemonInfoPage() {
 
   const { pokeId } = useParams();
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
   const [pokemon, setPokemon] = useState(null);
@@ -113,11 +114,26 @@ function PokemonInfoPage() {
     }
   }, [species]);
 
+  const handleNextClick = () => {
+    if (id < 905) setId((prevId) => prevId + 1);
+    // redirect(`/info/${id + 1}`);
+    navigate(`/info/${id + 1}`, {
+      replace: true,
+    });
+  }
+
+  const handlePreviousClick = () => {
+    if (id > 1) setId((prevId) => prevId - 1);
+    navigate(`/info/${id - 1}`, {
+      replace: true,
+    });
+  }
+
   return (
     <div className='min-h-screen my-10 xl:my-0 flex flex-col xl:flex-row gap-6 justify-center items-center'>
       <div className="hidden xl:block">
         { id > 1 ? (
-          <PokeButton type="previous" pokemon={previousPokemon} onClick={() => setId(id - 1)} loading={loading} />
+          <PokeButton type="previous" pokemon={previousPokemon} onClick={handlePreviousClick} loading={loading} />
         ) : (
           <div className="w-24"></div>
         )}
@@ -126,7 +142,7 @@ function PokemonInfoPage() {
         <div className="flex gap-5 items-center">
           <div className="hidden sm:block xl:hidden">
             { id > 1 ? (
-              <PokeButton type="previous" pokemon={previousPokemon} onClick={() => setId(id - 1)} loading={loading} />
+              <PokeButton type="previous" pokemon={previousPokemon} onClick={handlePreviousClick} loading={loading} />
             ) : (
               <div className="w-24"></div>
             )}
@@ -186,12 +202,12 @@ function PokemonInfoPage() {
                 <PokeDescription description={description} />
                 <div className="flex sm:hidden justify-between">
                   { id > 1 ? (
-                    <PokeButtonMini type="previous" pokemon={previousPokemon} onClick={() => setId(id - 1)} loading={loading} />
+                    <PokeButtonMini type="previous" pokemon={previousPokemon} onClick={handlePreviousClick} loading={loading} />
                   ) : (
                     <div className="w-24"></div>
                   )}
                   { id < 905 ? (
-                    <PokeButtonMini type="next" pokemon={nextPokemon} onClick={() => setId(id + 1)} loading={loading} />
+                    <PokeButtonMini type="next" pokemon={nextPokemon} onClick={handleNextClick} loading={loading} />
                   ) : (
                     <div className="w-24"></div>
                   )}
@@ -201,7 +217,7 @@ function PokemonInfoPage() {
           </div>
           <div className="hidden sm:block xl:hidden">
             { id < 905 ? (
-              <PokeButton type="next" pokemon={nextPokemon} onClick={() => setId(id + 1)} loading={loading} />
+              <PokeButton type="next" pokemon={nextPokemon} onClick={handleNextClick} loading={loading} />
             ) : (
               <div className="w-24"></div>
             )}
@@ -258,7 +274,7 @@ function PokemonInfoPage() {
       </div>
       <div className="hidden xl:block">
         { id < 905 ? (
-          <PokeButton type="next" pokemon={nextPokemon} onClick={() => setId(id + 1)} loading={loading} />
+          <PokeButton type="next" pokemon={nextPokemon} onClick={handleNextClick} loading={loading} />
         ) : (
           <div className="w-24"></div>
         )}

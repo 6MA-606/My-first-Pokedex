@@ -5,12 +5,12 @@ import {
   RouterProvider,
 } from "react-router-dom"
 import './index.css'
-import Pokedex from './App'
 import PokemonInfoPage from './pages/PokemonInfoPage.jsx'
+import Homepage from './HomePage'
 
 const router = createBrowserRouter([
-  { path: "/", element: <Pokedex /> },
-  { path: "/:pokePage", element: <Pokedex pageNum={":pokePage"} />},
+  { path: "/", element: <Homepage /> },
+  { path: "/:pokePage", element: <Homepage pageNum={":pokePage"} />},
   { path: "/info", element: <PokemonInfoPage /> },
   { path: "/info/:pokeId", element: <PokemonInfoPage pokeId={":pokeId"}/> },
 ])
