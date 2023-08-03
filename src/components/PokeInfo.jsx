@@ -256,17 +256,25 @@ PokeAbility.propTypes = {
 
 export const PokeEggGroups = (props) => {
 
-  const { eggGroups } = props;
+  const { eggGroups, loading } = props;
 
   return (
     <>
       <span className="text-sm text-neutral-400 font-semibold">Egg Groups</span>
       <div className="capitalize flex gap-2 my-2">
-        {eggGroups?.map((eggGroup, index) => (
-          <div key={index} className={`bg-egg-${eggGroup.name} rounded px-2 min-w-20 font-semibold text-sm text-white flex items-center justify-center`}>
-            <div className="text-white drop-shadow-text">{eggGroup.name}</div>
+        {loading ? (
+          <div className={`bg-neutral-800 rounded w-[4.5rem] text-sm`}>
+            <div>&nbsp;</div>
           </div>
-        ))}
+        ) : (
+          <>
+            {eggGroups?.map((eggGroup, index) => (
+              <div key={index} className={`bg-egg-${eggGroup.name} rounded px-2 font-semibold text-sm text-white flex items-center justify-center`}>
+                <div className="text-white drop-shadow-text">{eggGroup.name}</div>
+              </div>
+            ))}
+          </>
+        )}
       </div>
     </>
   );
@@ -274,6 +282,7 @@ export const PokeEggGroups = (props) => {
 
 PokeEggGroups.propTypes = {
   eggGroups: PropTypes.array,
+  loading: PropTypes.bool,
 };
 
 export const PokeEvoChain = (props) => {
@@ -281,13 +290,13 @@ export const PokeEvoChain = (props) => {
   const { evolutionChain, loading } = props;
 
   return (
-    <div className="">
+    <>
       {evolutionChain?.chain?.evolves_to[0] === undefined ? null : (
         <>
           <span className="text-sm text-neutral-400 font-semibold">Evolution Chain</span>
           <div className="flex justify-center gap-2 my-2">
             {loading ? (
-              <div className="text-sm text-neutral-300 font-semibold">Loading...</div>
+              <span className="loading loading-dots loading-md"></span>
             ) : (
               <div className="text-sm text-neutral-300 font-semibold flex gap-2">
                 <PokeEvoDiagram evoChain={evolutionChain} />
@@ -296,7 +305,7 @@ export const PokeEvoChain = (props) => {
           </div>
         </>
       )}
-    </div>
+    </>
   );
 };
 
@@ -398,7 +407,7 @@ const PokeEvoDiagram = (props) => {
             <div key={index} className="flex flex-col items-center gap-2">
               <div className="flex items-center justify-center">
                 <div className="flex">
-                  <div className="w-[7rem] h-20 flex flex-col justify-center items-center">
+                  <div className="w-[6rem] h-20 flex flex-col justify-center items-center">
                     <div>{evoTrigger(evo?.evolution_details[0], evo?.species?.name)}</div>
                     <ArrowRight className="text-neutral-400 text-xl" />
                   </div>
@@ -408,7 +417,7 @@ const PokeEvoDiagram = (props) => {
                   {evo?.evolves_to?.length > 0 ? (
                     evo?.evolves_to?.map((evo, index) => (
                       <div key={index} className="flex">
-                        <div className="w-[7rem] h-20 flex flex-col justify-center items-center">
+                        <div className="w-[6rem] h-20 flex flex-col justify-center items-center">
                           <div>{evoTrigger(evo?.evolution_details[0])}</div>
                           <ArrowRight className="text-neutral-400 text-xl" />
                         </div>
@@ -499,16 +508,23 @@ PokeCardMini.propTypes = {
 
 export const PokeDescription = (props) => {
 
-  const { description } = props;
+  const { description, loading } = props;
 
   return (
   <fieldset className='min-h-[6.25rem] border-[1px] border-neutral-500 rounded-lg'>
     <legend className='text-sm text-neutral-400 font-semibold px-1 ml-1'>Description</legend>
-    <div className='text-sm text-neutral-300 font-semibold text-center whitespace-pre-wrap mb-4'>{description}</div>
+    {loading ? (
+      <div className="text-center">
+        <span className="loading loading-bars loading-md"></span>
+      </div>
+    ) : (
+      <div className='text-sm text-neutral-300 font-semibold text-center whitespace-pre-wrap mb-4'>{description}</div>
+    )}
   </fieldset>
   );
 };
 
 PokeDescription.propTypes = {
   description: PropTypes.string,
+  loading: PropTypes.bool,
 };

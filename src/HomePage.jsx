@@ -65,7 +65,7 @@ const Homepage = () => {
             </div>
             <div className="py-6">
                 {loading ? (
-                    <div className="font-semibold text-neutral-300">Loading...</div>
+                    <span className="loading loading-dots loading-lg"></span>
                 ) : (
                     <div className="grid grid-cols-3 gap-5">
                         {pokemons?.map((pokemon) => (
@@ -75,24 +75,29 @@ const Homepage = () => {
                     </div>
                 )}
             </div>
-            <div className="flex justify-between items-center w-full px-6">
+            <div className="flex justify-between items-center w-full px-6 text-neutral-400 font-semibold">
                 { page > 1 ? (<PokePageButton type="prev" onClick={handlePreviousClick} />) : (<div className="w-32"></div>) }
                 { page - 3 > 0 ? (
                     <>
-                        <div className="text-neutral-400 font-semibold" onClick={() => {setPage(1); navigate(`/${1}`)}}>1</div>
-                        <div className="text-neutral-400 font-semibold">...</div>
+                        <div onClick={() => {setPage(1); navigate(`/${1}`)}}>1</div>
+                        <div>...</div>
                     </>
                 ) : null}
-                <div className="text-neutral-400 font-semibold" onClick={() => {setPage(page - 2); navigate(`/${page - 2}`)}}>{page > 2 ? page - 2 : null}</div>
-                <div className="text-neutral-400 font-semibold" onClick={() => {setPage(page - 1); navigate(`/${page - 1}`)}}>{page > 1 ? page - 1 : null}</div>
-                <div className="text-neutral-300 font-bold">{page}</div>
-                <div className="text-neutral-400 font-semibold" onClick={() => {setPage(page + 1); navigate(`/${page + 1}`)}}>{page < 44 ? page + 1 : null}</div>
-                <div className="text-neutral-400 font-semibold" onClick={() => {setPage(page + 2); navigate(`/${page + 2}`)}}>{page < 43 ? page + 2 : null}</div>
-            
+                <div onClick={() => {setPage(page - 2); navigate(`/${page - 2}`)}}>{page > 2 ? page - 2 : null}</div>
+                <div onClick={() => {setPage(page - 1); navigate(`/${page - 1}`)}}>{page > 1 ? page - 1 : null}</div>
+                <div className="text-neutral-300 font-bold">
+                    <select className="border-2 border-neutral-700 rounded-md bg-neutral-600" onChange={(e) => {setPage(parseInt(e.target.value))}} value={page}>
+                        {Array.from(Array(44).keys()).map((num) => (
+                            <option key={num} value={num + 1}>{num + 1}</option>
+                        ))}
+                    </select>
+                </div>
+                <div onClick={() => {setPage(page + 1); navigate(`/${page + 1}`)}}>{page < 44 ? page + 1 : null}</div>
+                <div onClick={() => {setPage(page + 2); navigate(`/${page + 2}`)}}>{page < 43 ? page + 2 : null}</div>
                 { 44 - page > 2 ? (
                     <>
-                        <div className="text-neutral-400 font-semibold">...</div>
-                        <div className="text-neutral-400 font-semibold" onClick={() => {setPage(44); navigate(`/${44}`)}}>44</div>
+                        <div>...</div>
+                        <div onClick={() => {setPage(44); navigate(`/${44}`)}}>44</div>
                     </>
                 ) : null}
                 { page < 44 ? (<PokePageButton type="next" onClick={handleNextClick} />) : (<div className="w-32"></div>) }

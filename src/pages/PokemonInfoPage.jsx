@@ -130,7 +130,7 @@ function PokemonInfoPage() {
   }
 
   return (
-    <div className='min-h-screen my-10 xl:my-0 flex flex-col xl:flex-row gap-6 justify-center items-center'>
+    <div className='bg-neutral-800 min-h-screen pt-10 pb-10 xl:p-0 flex flex-col xl:flex-row gap-6 justify-center items-center'>
       <div className="hidden xl:block">
         { id > 1 ? (
           <PokeButton type="previous" pokemon={previousPokemon} onClick={handlePreviousClick} loading={loading} />
@@ -197,9 +197,11 @@ function PokemonInfoPage() {
                       <PokeType key={index} pokeType={type.type.name} loading={loading} />
                     ))}
                   </div>
-                  <div className='bg-neutral-700 text-sm text-neutral-300 font-semibold ml-1 capitalize'>{species?.genera[7].genus}</div>
+                  <div className='bg-neutral-700 text-sm text-neutral-300 font-semibold ml-1 capitalize'>
+                    {loading ? (<span>&nbsp;</span>) : species?.genera[7].genus}
+                  </div>
                 </div>
-                <PokeDescription description={description} />
+                <PokeDescription description={description} loading={loading} />
                 <div className="flex sm:hidden justify-between">
                   { id > 1 ? (
                     <PokeButtonMini type="previous" pokemon={previousPokemon} onClick={handlePreviousClick} loading={loading} />
@@ -236,7 +238,7 @@ function PokemonInfoPage() {
                 <PokeAbility abilities={pokemon?.abilities} />
               </div>
               <div className='flex-1'>
-                <PokeEggGroups eggGroups={species?.egg_groups} />
+                <PokeEggGroups eggGroups={species?.egg_groups} loading={loading} />
               </div>
             </div>
             <fieldset className='h-auto border-[1px] border-neutral-500 rounded-lg flex flex-col md:flex-row justify-evenly items-center'>
@@ -279,6 +281,19 @@ function PokemonInfoPage() {
           <div className="w-24"></div>
         )}
       </div>
+      <div className="flex sm:hidden justify-between w-[30rem]">
+        { id > 1 ? (
+          <PokeButtonMini type="previous" pokemon={previousPokemon} onClick={handlePreviousClick} loading={loading} />
+          ) : (
+          <div className="w-24"></div>
+        )}
+        { id < 905 ? (
+          <PokeButtonMini type="next" pokemon={nextPokemon} onClick={handleNextClick} loading={loading} />
+          ) : (
+            <div className="w-24"></div>
+            )}
+      </div>
+      <div className="my-5 text-[1rem] text-neutral-300 font-semibold">{"Made by Shingetsu."}</div>
       <BackToTopButton />
     </div>
   )
