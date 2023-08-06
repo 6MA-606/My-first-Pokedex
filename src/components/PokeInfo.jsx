@@ -2,7 +2,7 @@ import axios from "axios";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
-import { ArrowRight } from "react-bootstrap-icons";
+import { ArrowRight } from "./Icon";
 
 const dataColors = (type) => {
   switch (type) {
@@ -258,6 +258,28 @@ export const PokeEggGroups = (props) => {
 
   const { eggGroups, loading } = props;
 
+  const eggGroupNames = new Map([
+    ["monster", "Monster"],
+    ["water1", "Water 1"],
+    ["bug", "Bug"],
+    ["flying", "Flying"],
+    ["ground", "Field"],
+    ["fairy", "Fairy"],
+    ["plant", "Grass"],
+    ["humanshape", "Human-Like"],
+    ["water3", "Water 3"],
+    ["mineral", "Mineral"],
+    ["indeterminate", "Amorphous"],
+    ["water2", "Water 2"],
+    ["ditto", "Ditto"],
+    ["dragon", "Dragon"],
+    ["no-eggs", "No Eggs"],
+  ]);
+
+  const groupName = (eggGroupCode) => {
+    return eggGroupNames.get(eggGroupCode) || "Unknown";
+  };
+
   return (
     <>
       <span className="text-sm text-neutral-400 font-semibold">Egg Groups</span>
@@ -270,7 +292,7 @@ export const PokeEggGroups = (props) => {
           <>
             {eggGroups?.map((eggGroup, index) => (
               <div key={index} className={`bg-egg-${eggGroup.name} rounded px-2 font-semibold text-sm text-white flex items-center justify-center`}>
-                <div className="text-white drop-shadow-text">{eggGroup.name}</div>
+                <div className="text-white drop-shadow-text">{groupName(eggGroup.name)}</div>
               </div>
             ))}
           </>

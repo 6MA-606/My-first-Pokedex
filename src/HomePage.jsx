@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from "react"
 import { PokeFetchCard } from "./components/PokeCard"
 import { PokePageButton } from "./components/Button"
 import { useNavigate, useParams } from "react-router-dom"
+import PageNav from "./components/PageNav"
 
 const Homepage = () => {
 
@@ -53,13 +54,20 @@ const Homepage = () => {
         });
     }
 
+    const handleChangePage = (num) => {
+        setPage(num);
+        navigate(`/${num}`, {
+            replace: true
+        });
+    }
+
     return (
-        <div className="w-screen h-auto flex flex-col items-center">
-            <div className="mb-5 flex flex-col items-center justify-center bg-red-700 w-full min-h-[10rem] rounded-b-2xl border-b-4 border-red-600">
+        <div className="bg-neutral-800 w-screen h-auto flex flex-col items-center m-0">
+            <div className="mb-5 flex flex-col items-center justify-center bg-neutral-700 w-full min-h-[10rem] rounded-b-2xl border-b-4 border-red-600">
                 <div className="text-[4rem] text-neutral-200 font-semibold drop-shadow-text">Pokédex</div>
                 <div className="text-[1rem] text-neutral-300 font-semibold">{"Latest data is up to Generation 8"}</div>
             </div>
-            <div className="flex justify-between items-center w-full px-6">
+            <div className="flex justify-between items-center w-full max-w-[52rem] px-6">
                 { page > 1 ? (<PokePageButton type="prev" onClick={handlePreviousClick} />) : (<div className="w-32"></div>) }
                 { page < 44 ? (<PokePageButton type="next" onClick={handleNextClick} />) : (<div className="w-32"></div>) }
             </div>
@@ -75,31 +83,9 @@ const Homepage = () => {
                     </div>
                 )}
             </div>
-            <div className="flex justify-between items-center w-full px-6 text-neutral-400 font-semibold">
+            <div className="flex justify-between items-center w-full max-w-[52rem] px-6 text-neutral-400 font-semibold text-sm md:text-base">
                 { page > 1 ? (<PokePageButton type="prev" onClick={handlePreviousClick} />) : (<div className="w-32"></div>) }
-                { page - 3 > 0 ? (
-                    <>
-                        <div onClick={() => {setPage(1); navigate(`/${1}`)}}>1</div>
-                        <div>...</div>
-                    </>
-                ) : null}
-                <div onClick={() => {setPage(page - 2); navigate(`/${page - 2}`)}}>{page > 2 ? page - 2 : null}</div>
-                <div onClick={() => {setPage(page - 1); navigate(`/${page - 1}`)}}>{page > 1 ? page - 1 : null}</div>
-                <div className="text-neutral-300 font-bold">
-                    <select className="border-2 border-neutral-700 rounded-md bg-neutral-600" onChange={(e) => {setPage(parseInt(e.target.value))}} value={page}>
-                        {Array.from(Array(44).keys()).map((num) => (
-                            <option key={num} value={num + 1}>{num + 1}</option>
-                        ))}
-                    </select>
-                </div>
-                <div onClick={() => {setPage(page + 1); navigate(`/${page + 1}`)}}>{page < 44 ? page + 1 : null}</div>
-                <div onClick={() => {setPage(page + 2); navigate(`/${page + 2}`)}}>{page < 43 ? page + 2 : null}</div>
-                { 44 - page > 2 ? (
-                    <>
-                        <div>...</div>
-                        <div onClick={() => {setPage(44); navigate(`/${44}`)}}>44</div>
-                    </>
-                ) : null}
+                <PageNav currentPage={page} onChangePage={handleChangePage} />
                 { page < 44 ? (<PokePageButton type="next" onClick={handleNextClick} />) : (<div className="w-32"></div>) }
             </div>
             <div className="my-5">

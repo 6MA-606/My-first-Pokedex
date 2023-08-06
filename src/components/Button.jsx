@@ -1,7 +1,6 @@
-import { ArrowUp, ChevronLeft, ChevronRight } from "react-bootstrap-icons";
+import { ArrowUp, ChevronLeft, ChevronRight, ShinyIcon } from "./Icon";
 import PropTypes from 'prop-types';
 import { useEffect, useState } from "react";
-import { ShinyIcon } from "./Icon";
 
 export const PokeButton = (props) => {
     const { type, onClick, loading, pokemon } = props;
@@ -12,7 +11,7 @@ export const PokeButton = (props) => {
             {loading ? <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-neutral-300"></div> : <img className='scale-[1.5]' src={pokemon?.sprites.front_default} alt="" />}
           </div>
           <div className='text-neutral-300 capitalize mt-1'>{pokemon?.name}</div>
-          <div className='text-neutral-400 text-sm font-semibold'>#{pokemon?.id.toString().padStart(3, '0')}</div>
+          <div className='text-neutral-400 text-sm font-semibold'>{`#${pokemon?.id.toString().padStart(3, '0')}`}</div>
           <div className="text-neutral-300 text-2xl mt-1">{ type == "next" ? <ChevronRight /> : <ChevronLeft /> }</div>
         </button>
     );
@@ -33,7 +32,7 @@ export const PokeButtonMini = (props) => {
         <div className="text-neutral-300 text-2xl mx-1">{ type == "previous" ? <ChevronLeft /> : null }</div>
         <div className="flex justify-center items-baseline gap-1">
           <div className='text-neutral-300 capitalize'>{pokemon?.name}</div>
-          <div className='text-neutral-400 text-sm font-semibold flex justify-center items-center'>#{pokemon?.id.toString().padStart(3, '0')}</div>
+          <div className='text-neutral-400 text-sm font-semibold flex justify-center items-center'>{`#${pokemon?.id.toString().padStart(3, '0')}`}</div>
         </div>
         <div className="text-neutral-300 text-2xl mx-1">{ type == "next" ? <ChevronRight /> : null }</div>
       </button>

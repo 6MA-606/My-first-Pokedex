@@ -16,3 +16,63 @@ export const ShinyIcon = (props) => {
 ShinyIcon.propTypes = {
     className: PropTypes.string,
 }
+
+export const ArrowRight = (props) => {
+
+    const { className } = props;
+
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className={className} viewBox="0 0 16 16">
+            <path fillRule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+        </svg>
+    );
+}
+
+ArrowRight.propTypes = {
+    className: PropTypes.string,
+}
+
+export const ArrowUp = (props) => {
+
+    const { className } = props;
+
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className={className} viewBox="0 0 16 16">
+            <path fillRule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/>
+        </svg>
+    );
+}
+
+ArrowUp.propTypes = {
+    className: PropTypes.string,
+}
+
+export const ChevronLeft = (props) => {
+
+    const { className } = props;
+
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className={className} viewBox="0 0 16 16">
+            <path fillRule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+        </svg>
+    );
+}
+
+ChevronLeft.propTypes = {
+    className: PropTypes.string,
+}
+
+export const ChevronRight = (props) => {
+
+    const { className } = props;
+
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className={className} viewBox="0 0 16 16">
+            <path fillRule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+        </svg>
+    );
+}
+
+ChevronRight.propTypes = {
+    className: PropTypes.string,
+}

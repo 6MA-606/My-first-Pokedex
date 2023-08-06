@@ -38,7 +38,7 @@ export const PokeFetchCard = (props) => {
 
     return (
         <div
-            className={`${onClick ? "cursor-pointer" : ""} w-[10rem] h-[12rem] flex flex-col justify-center items-center bg-neutral-700 border-2 border-neutral-600 rounded-xl`}
+            className={`${onClick ? "cursor-pointer" : ""} w-[10rem] h-[12rem] md:w-[15rem] flex flex-col justify-center items-center bg-neutral-700 border-2 border-neutral-600 rounded-xl`}
             onClick={onClick}
         >
             {loading ? (
@@ -54,7 +54,7 @@ export const PokeFetchCard = (props) => {
             ) : (
                 <>
                     <div className="flex my-1 gap-1 items-center">
-                        <div className="capitalize font-semibold text-neutral-200">{pokemon?.name}</div>
+                        <div className="capitalize font-semibold text-neutral-200">{pokemon?.name.split('-')[0]}</div>
                         <div className="font-semibold text-neutral-400">{'#' + pokemon?.id.toString().padStart(3, '0')}</div>
                     </div>
                     <img className="bg-pokeball bg-center bg-no-repeat" src={pokemon?.sprites?.front_default} alt={pokemon?.name} />
