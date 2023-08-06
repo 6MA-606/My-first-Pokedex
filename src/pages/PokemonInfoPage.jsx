@@ -130,7 +130,7 @@ function PokemonInfoPage() {
   }
 
   return (
-      <div className='bg-neutral-800 h-auto pt-10 pb-10 xl:p-0 flex flex-col xl:flex-row gap-6 items-center justify-center'>
+      <div className='bg-neutral-800 min-h-screen pt-10 pb-10 xl:p-0 flex flex-col xl:flex-row gap-6 items-center justify-center'>
         <div className="hidden xl:block">
           { id > 1 ? (
             <PokeButton type="previous" pokemon={previousPokemon} onClick={handlePreviousClick} loading={loading} />
