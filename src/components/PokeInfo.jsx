@@ -4,47 +4,28 @@ import { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 import { ArrowRight } from "./Icon";
 
-const dataColors = (type) => {
-  switch (type) {
-    case "normal":
-      return "#A8A77A";
-    case "fire":
-      return "#EE8130";
-    case "water":
-      return "#6390F0";
-    case "electric":
-      return "#F7D02C";
-    case "grass":
-      return "#7AC74C";
-    case "ice":
-      return "#96D9D6";
-    case "fighting":
-      return "#C22E28";
-    case "poison":
-      return "#A33EA1";
-    case "ground":
-      return "#E2BF65";
-    case "flying":
-      return "#A98FF3";
-    case "psychic":
-      return "#F95587";
-    case "bug":
-      return "#A6B91A";
-    case "rock":
-      return "#B6A136";
-    case "ghost":
-      return "#735797";
-    case "dragon":
-      return "#6F35FC";
-    case "dark":
-      return "#705746";
-    case "steel":
-      return "#B7B7CE";
-    case "fairy":
-      return "#D685AD";
-    default:
-      return "#A8A77A";
-  }
+const chartColor = (pokeType) => {
+  const colors = new Map([
+    ["normal", "#A8A77A"],
+    ["fire", "#EE8130"],
+    ["water", "#6390F0"],
+    ["electric", "#F7D02C"],
+    ["grass", "#7AC74C"],
+    ["ice", "#96D9D6"],
+    ["fighting", "#C22E28"],
+    ["poison", "#A33EA1"],
+    ["ground", "#E2BF65"],
+    ["flying", "#A98FF3"],
+    ["psychic", "#F95587"],
+    ["bug", "#A6B91A"],
+    ["rock", "#B6A136"],
+    ["ghost", "#735797"],
+    ["dragon", "#6F35FC"],
+    ["dark", "#705746"],
+    ["steel", "#B7B7CE"],
+    ["fairy", "#D685AD"],
+  ]);
+  return colors.get(pokeType) || "#000";
 };
 
 export const PokeType = (props) => {
@@ -76,7 +57,7 @@ export const PokePolygonStat = (props) => {
 
   const [data, setData] = useState([]);
 
-  const typeColor = dataColors(pokeType);
+  const typeColor = chartColor(pokeType);
 
   const options = {
     chart: {
@@ -153,37 +134,37 @@ export const PokeRangeStat = (props) => {
           label="HP"
           value={stat?.hp}
           max={255}
-          color={dataColors(pokeType)}
+          color={chartColor(pokeType)}
         />
         <StatBar
           label="ATK"
           value={stat?.atk}
           max={255}
-          color={dataColors(pokeType)}
+          color={chartColor(pokeType)}
         />
         <StatBar
           label="DEF"
           value={stat?.def}
           max={255}
-          color={dataColors(pokeType)}
+          color={chartColor(pokeType)}
         />
         <StatBar
           label="S.ATK"
           value={stat?.satk}
           max={255}
-          color={dataColors(pokeType)}
+          color={chartColor(pokeType)}
         />
         <StatBar
           label="S.DEF"
           value={stat?.sdef}
           max={255}
-          color={dataColors(pokeType)}
+          color={chartColor(pokeType)}
         />
         <StatBar
           label="SPD"
           value={stat?.spd}
           max={255}
-          color={dataColors(pokeType)}
+          color={chartColor(pokeType)}
         />
       </div>
     </div>
