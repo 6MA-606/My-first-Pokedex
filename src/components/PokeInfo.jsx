@@ -32,14 +32,14 @@ export const PokeType = (props) => {
   const { pokeType, size, loading } = props;
 
   return (
-    <div style={{ fontSize: (`${size || 1}rem`)}}>
+    <div style={{ fontSize: `${size || 1}rem` }}>
       {loading ? (
         <div className="bg-neutral-600 rounded w-[6em] h-[1.75em] text-[0.875em]"></div>
       ) : (
-        <div className={`bg-type-${pokeType} rounded w-[6em] h-[1.75em] uppercase font-semibold text-[0.875em] text-white flex items-center justify-center`}>
-          <div className="text-white drop-shadow-text">
-            {pokeType}
-          </div>
+        <div
+          className={`bg-type-${pokeType} rounded w-[6em] h-[1.75em] uppercase font-semibold text-[0.875em] text-white flex items-center justify-center`}
+        >
+          <div className="text-white drop-shadow-text">{pokeType}</div>
         </div>
       )}
     </div>
@@ -100,7 +100,14 @@ export const PokePolygonStat = (props) => {
     setData([
       {
         name: "Stat",
-        data: [stat?.hp, stat?.atk, stat?.def, stat?.satk, stat?.sdef, stat?.spd],
+        data: [
+          stat?.hp,
+          stat?.atk,
+          stat?.def,
+          stat?.satk,
+          stat?.sdef,
+          stat?.spd,
+        ],
         color: typeColor,
       },
     ]);
@@ -128,7 +135,10 @@ export const PokeRangeStat = (props) => {
 
   return (
     <div className="bg-neutral-600 h-48 w-[20rem] rounded-lg">
-      <div className="text-sm text-neutral-300 font-semibold text-right mr-4 mt-2">Total {stat?.hp + stat?.atk + stat?.def + stat?.satk + stat?.sdef + stat?.spd}</div>
+      <div className="text-sm text-neutral-300 font-semibold text-right mr-4 mt-2">
+        Total{" "}
+        {stat?.hp + stat?.atk + stat?.def + stat?.satk + stat?.sdef + stat?.spd}
+      </div>
       <div className="flex justify-center gap-2">
         <StatBar
           label="HP"
@@ -236,7 +246,6 @@ PokeAbility.propTypes = {
 };
 
 export const PokeEggGroups = (props) => {
-
   const { eggGroups, loading } = props;
 
   const eggGroupNames = new Map([
@@ -272,8 +281,13 @@ export const PokeEggGroups = (props) => {
         ) : (
           <>
             {eggGroups?.map((eggGroup, index) => (
-              <div key={index} className={`bg-egg-${eggGroup.name} rounded px-2 font-semibold text-sm text-white flex items-center justify-center`}>
-                <div className="text-white drop-shadow-text">{groupName(eggGroup.name)}</div>
+              <div
+                key={index}
+                className={`bg-egg-${eggGroup.name} rounded px-2 font-semibold text-sm text-white flex items-center justify-center`}
+              >
+                <div className="text-white drop-shadow-text">
+                  {groupName(eggGroup.name)}
+                </div>
               </div>
             ))}
           </>
@@ -289,14 +303,15 @@ PokeEggGroups.propTypes = {
 };
 
 export const PokeEvoChain = (props) => {
-
   const { evolutionChain, loading } = props;
 
   return (
     <>
       {evolutionChain?.chain?.evolves_to[0] === undefined ? null : (
         <>
-          <span className="text-sm text-neutral-400 font-semibold">Evolution Chain</span>
+          <span className="text-sm text-neutral-400 font-semibold">
+            Evolution Chain
+          </span>
           <div className="flex justify-center gap-2 my-2">
             {loading ? (
               <span className="loading loading-dots loading-md"></span>
@@ -318,11 +333,9 @@ PokeEvoChain.propTypes = {
 };
 
 const PokeEvoDiagram = (props) => {
-
   const { evoChain } = props;
 
   const evoTrigger = (evoDetail, name) => {
-
     let triggers = [];
 
     if (evoDetail?.trigger?.name === "level-up") {
@@ -373,8 +386,14 @@ const PokeEvoDiagram = (props) => {
     }
 
     if (name === "leafeon" || name === "glaceon") {
-      triggers.push(`Use ${name === "leafeon" ? "Leaf\u00A0stone" : "Ice\u00A0stone"}`);
-      triggers.push(`or level up near an ${name === "leafeon" ? "Moss\u00A0Rock" : "Ice\u00A0Rock"}`);
+      triggers.push(
+        `Use ${name === "leafeon" ? "Leaf\u00A0stone" : "Ice\u00A0stone"}`
+      );
+      triggers.push(
+        `or level up near an ${
+          name === "leafeon" ? "Moss\u00A0Rock" : "Ice\u00A0Rock"
+        }`
+      );
     }
 
     if (name === "sylveon") {
@@ -390,49 +409,67 @@ const PokeEvoDiagram = (props) => {
         ))}
       </div>
     );
-  }
+  };
 
   return (
     <div className="flex items-center">
       <div className="flex flex-col items-center gap-5">
         {evoChain?.chain?.species?.name === "eevee" ? (
           evoChain?.chain?.evolves_to?.map((evo, index) => (
-            <PokeCardMini key={index} pokeId={(evoChain?.chain?.species?.url)?.split("/")[6]} pokeName={evoChain?.chain?.species?.name} />
+            <PokeCardMini
+              key={index}
+              pokeId={evoChain?.chain?.species?.url?.split("/")[6]}
+              pokeName={evoChain?.chain?.species?.name}
+            />
           ))
         ) : (
-          <PokeCardMini pokeId={(evoChain?.chain?.species?.url)?.split("/")[6]} pokeName={evoChain?.chain?.species?.name} />
+          <PokeCardMini
+            pokeId={evoChain?.chain?.species?.url?.split("/")[6]}
+            pokeName={evoChain?.chain?.species?.name}
+          />
         )}
       </div>
 
       <div className="flex flex-col gap-5">
-        {evoChain?.chain?.evolves_to?.length > 0 ? (
-          evoChain?.chain?.evolves_to?.map((evo, index) => (
-            <div key={index} className="flex flex-col items-center gap-2">
-              <div className="flex items-center justify-center">
-                <div className="flex">
-                  <div className="w-[6rem] h-20 flex flex-col justify-center items-center">
-                    <div>{evoTrigger(evo?.evolution_details[0], evo?.species?.name)}</div>
-                    <ArrowRight className="text-neutral-400 text-xl" />
-                  </div>
-                  <PokeCardMini pokeId={evo?.species?.url.split("/")[6]} pokeName={evo?.species?.name} />
-                </div>
-                <div className="flex flex-col gap-5">
-                  {evo?.evolves_to?.length > 0 ? (
-                    evo?.evolves_to?.map((evo, index) => (
-                      <div key={index} className="flex">
-                        <div className="w-[6rem] h-20 flex flex-col justify-center items-center">
-                          <div>{evoTrigger(evo?.evolution_details[0])}</div>
-                          <ArrowRight className="text-neutral-400 text-xl" />
-                        </div>
-                        <PokeCardMini pokeId={evo?.species?.url.split("/")[6]} pokeName={evo?.species?.name} />
+        {evoChain?.chain?.evolves_to?.length > 0
+          ? evoChain?.chain?.evolves_to?.map((evo, index) => (
+              <div key={index} className="flex flex-col items-center gap-2">
+                <div className="flex items-center justify-center">
+                  <div className="flex">
+                    <div className="w-[6rem] h-20 flex flex-col justify-center items-center">
+                      <div>
+                        {evoTrigger(
+                          evo?.evolution_details[0],
+                          evo?.species?.name
+                        )}
                       </div>
-                    ))
-                  ) : null}
+                      <ArrowRight className="text-neutral-400 text-xl" />
+                    </div>
+                    <PokeCardMini
+                      pokeId={evo?.species?.url.split("/")[6]}
+                      pokeName={evo?.species?.name}
+                    />
+                  </div>
+                  <div className="flex flex-col gap-5">
+                    {evo?.evolves_to?.length > 0
+                      ? evo?.evolves_to?.map((evo, index) => (
+                          <div key={index} className="flex">
+                            <div className="w-[6rem] h-20 flex flex-col justify-center items-center">
+                              <div>{evoTrigger(evo?.evolution_details[0])}</div>
+                              <ArrowRight className="text-neutral-400 text-xl" />
+                            </div>
+                            <PokeCardMini
+                              pokeId={evo?.species?.url.split("/")[6]}
+                              pokeName={evo?.species?.name}
+                            />
+                          </div>
+                        ))
+                      : null}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))
-        ) : null}
+            ))
+          : null}
       </div>
     </div>
   );
@@ -444,25 +481,27 @@ PokeEvoDiagram.propTypes = {
 };
 
 export const PokeCardMini = (props) => {
-
   const { pokeId, pokeName } = props;
 
   const [pokemon, setPokemon] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
- 
     let abortController = new AbortController();
 
     const fetchPokeType = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokeId}`, {
-          signal: abortController.signal
-        });
+        const res = await axios.get(
+          `https://pokeapi.co/api/v2/pokemon/${pokeId}`,
+          {
+            signal: abortController.signal,
+          }
+        );
         setPokemon(res.data);
       } catch (error) {
-        if (!axios.isCancel(error)) console.error("Something went wrong, ", error);
+        if (!axios.isCancel(error))
+          console.error("Something went wrong, ", error);
       } finally {
         setLoading(false);
       }
@@ -472,8 +511,7 @@ export const PokeCardMini = (props) => {
 
     return () => {
       abortController.abort();
-    }
-
+    };
   }, [pokeId]);
 
   return (
@@ -492,8 +530,12 @@ export const PokeCardMini = (props) => {
         )}
       </div>
       <div className="flex items-baseline gap-1">
-        <div className="text-sm text-neutral-300 font-semibold capitalize whitespace-nowrap">{pokeName}</div>
-        <div className="text-xs text-neutral-400">#{pokeId?.toString().padStart(3, '0')}</div>
+        <div className="text-sm text-neutral-300 font-semibold capitalize whitespace-nowrap">
+          {pokeName}
+        </div>
+        <div className="text-xs text-neutral-400">
+          #{pokeId?.toString().padStart(3, "0")}
+        </div>
       </div>
       <div className="flex gap-1 h-4">
         {pokemon?.types?.map((type, index) => (
@@ -510,20 +552,23 @@ PokeCardMini.propTypes = {
 };
 
 export const PokeDescription = (props) => {
-
   const { description, loading } = props;
 
   return (
-  <fieldset className='min-h-[6.25rem] border-[1px] border-neutral-500 rounded-lg'>
-    <legend className='text-sm text-neutral-400 font-semibold px-1 ml-1'>Description</legend>
-    {loading ? (
-      <div className="text-center">
-        <span className="loading loading-bars loading-md"></span>
-      </div>
-    ) : (
-      <div className='text-sm text-neutral-300 font-semibold text-center whitespace-pre-wrap mb-4'>{description}</div>
-    )}
-  </fieldset>
+    <fieldset className="min-h-[6.25rem] border-[1px] border-neutral-500 rounded-lg">
+      <legend className="text-sm text-neutral-400 font-semibold px-1 ml-1">
+        Description
+      </legend>
+      {loading ? (
+        <div className="text-center">
+          <span className="loading loading-bars loading-md"></span>
+        </div>
+      ) : (
+        <div className="text-sm text-neutral-300 font-semibold text-center whitespace-pre-wrap mb-4">
+          {description}
+        </div>
+      )}
+    </fieldset>
   );
 };
 
