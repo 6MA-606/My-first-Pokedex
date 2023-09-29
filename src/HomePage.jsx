@@ -1,76 +1,76 @@
-import axios from "axios";
-import { useCallback, useEffect, useState } from "react";
-import { PokeFetchCard } from "./components/PokeCard";
-import { PokePageButton } from "./components/Button";
-import { useNavigate, useParams } from "react-router-dom";
-import PageNav from "./components/PageNav";
+import axios from "axios"
+import { useCallback, useEffect, useState } from "react"
+import { PokeFetchCard } from "./components/PokeFetchCard"
+import { PokePageButton } from "./components/Button"
+import { useNavigate, useParams } from "react-router-dom"
+import PageNav from "./components/PageNav"
+import { GitHubAccount } from "./components/SocialWidget"
 
 const Homepage = () => {
-  const { pokePage } = useParams();
-  const navigate = useNavigate();
+  const { pokePage } = useParams()
+  const navigate = useNavigate()
 
-  const [pokemons, setPokemons] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [page, setPage] = useState(parseInt(pokePage) || 1);
+  const [pokemons, setPokemons] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [page, setPage] = useState(parseInt(pokePage) || 1)
 
   const loadPokemons = useCallback(async () => {
-    let abortController = new AbortController();
+    let abortController = new AbortController()
 
     try {
-      setLoading(true);
+      setLoading(true)
       const res = await axios.get(
         `https://pokeapi.co/api/v2/pokemon?limit=21&offset=${(page - 1) * 21}`,
         {
           signal: abortController.signal,
         }
-      );
-      setPokemons(res.data.results);
+      )
+      setPokemons(res.data.results)
     } catch (error) {
       if (!axios.isCancel(error)) {
-        console.log("Something went wrong, ", error);
+        console.log("Something went wrong, ", error)
       }
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
 
     return () => {
-      abortController.abort();
-    };
-  }, [page]);
+      abortController.abort()
+    }
+  }, [page])
 
   useEffect(() => {
-    loadPokemons();
-  }, [loadPokemons]);
+    loadPokemons()
+  }, [loadPokemons])
 
-  const handlePreviousClick = () => {
-    setPage((prevPage) => prevPage - 1);
+  const handlePreviousClick = (e) => {
+    e.preventDefault()
+    setPage((prevPage) => prevPage - 1)
     navigate(`/${page - 1}`, {
       replace: true,
-    });
-  };
+    })
+  }
 
-  const handleNextClick = () => {
-    setPage((prevPage) => prevPage + 1);
+  const handleNextClick = (e) => {
+    e.preventDefault()
+    setPage((prevPage) => prevPage + 1)
     navigate(`/${page + 1}`, {
       replace: true,
-    });
-  };
+    })
+  }
 
   const handleChangePage = (num) => {
-    setPage(num);
+    setPage(num)
     navigate(`/${num}`, {
       replace: true,
-    });
-  };
+    })
+  }
 
   return (
     <div className="bg-neutral-800 w-screen h-auto flex flex-col items-center m-0">
-      <div className="mb-5 flex flex-col items-center justify-center bg-neutral-700 w-full min-h-[10rem] rounded-b-2xl border-b-4 border-red-600">
-        <div className="text-[4rem] text-neutral-200 font-semibold drop-shadow-text">
+      <div className="mb-5 flex flex-col items-center justify-center bg-neutral-700 w-full min-h-[10rem] rounded-b-2xl border-b-4 border-red-400 drop-shadow-glow-red">
+        <div className="text-[4rem] text-neutral-200 font-semibold">
           Pokédex
-        </div>
-        <div className="text-[1rem] text-neutral-300 font-semibold">
-          {"Latest data is up to Generation 8"}
         </div>
       </div>
       <div className="flex justify-between items-center w-full max-w-[52rem] px-6">
@@ -106,7 +106,7 @@ const Homepage = () => {
           </div>
         )}
       </div>
-      <div className="flex justify-between items-center w-full max-w-[52rem] px-6 text-neutral-400 font-semibold text-sm md:text-base">
+      <div className="flex justify-between items-center w-full max-w-[52rem] px-6 lg:mb-5 text-neutral-400 font-semibold text-sm md:text-base">
         {page > 1 ? (
           <PokePageButton type="prev" onClick={handlePreviousClick} />
         ) : (
@@ -119,13 +119,14 @@ const Homepage = () => {
           <div className="w-32"></div>
         )}
       </div>
-      <div className="my-5">
-        <div className="text-[1rem] text-neutral-300 font-semibold">
-          {"Made by Shingetsu."}
-        </div>
-      </div>
+      <GitHubAccount
+        username={"6MA-606"}
+        className={"my-5 lg:m-0 lg:fixed lg:right-4 lg:bottom-4"}
+      >
+        {"Made by 6MA-606"}
+      </GitHubAccount>
     </div>
-  );
-};
+  )
+}
 
-export default Homepage;
+export default Homepage

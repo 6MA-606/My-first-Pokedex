@@ -1,8 +1,8 @@
-import axios from "axios";
-import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
-import ReactApexChart from "react-apexcharts";
-import { ArrowRight } from "./Icon";
+import axios from "axios"
+import PropTypes from "prop-types"
+import { useEffect, useState } from "react"
+import ReactApexChart from "react-apexcharts"
+import { ArrowRight } from "./Icon"
 
 const chartColor = (pokeType) => {
   const colors = new Map([
@@ -24,12 +24,12 @@ const chartColor = (pokeType) => {
     ["dark", "#705746"],
     ["steel", "#B7B7CE"],
     ["fairy", "#D685AD"],
-  ]);
-  return colors.get(pokeType) || "#000";
-};
+  ])
+  return colors.get(pokeType) || "#000"
+}
 
 export const PokeType = (props) => {
-  const { pokeType, size, loading } = props;
+  const { pokeType, size, loading } = props
 
   return (
     <div style={{ fontSize: `${size || 1}rem` }}>
@@ -43,21 +43,21 @@ export const PokeType = (props) => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
 PokeType.propTypes = {
   pokeType: PropTypes.string,
   size: PropTypes.number,
   loading: PropTypes.bool,
-};
+}
 
 export const PokePolygonStat = (props) => {
-  const { stat, pokeType } = props;
+  const { stat, pokeType } = props
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState([])
 
-  const typeColor = chartColor(pokeType);
+  const typeColor = chartColor(pokeType)
 
   const options = {
     chart: {
@@ -93,10 +93,10 @@ export const PokePolygonStat = (props) => {
         rotate: 0,
       },
     },
-  };
+  }
 
   useEffect(() => {
-    if (stat?.hp === undefined) return;
+    if (stat?.hp === undefined) return
     setData([
       {
         name: "Stat",
@@ -110,8 +110,8 @@ export const PokePolygonStat = (props) => {
         ],
         color: typeColor,
       },
-    ]);
-  }, [stat, typeColor]);
+    ])
+  }, [stat, typeColor])
 
   return (
     <ReactApexChart
@@ -122,16 +122,16 @@ export const PokePolygonStat = (props) => {
       width={document.documentElement.clientWidth < 1500 ? "210" : "250"}
       className="flex items-center justify-center translate-x-4"
     />
-  );
-};
+  )
+}
 
 PokePolygonStat.propTypes = {
   stat: PropTypes.object.isRequired,
   pokeType: PropTypes.string,
-};
+}
 
 export const PokeRangeStat = (props) => {
-  const { stat, pokeType } = props;
+  const { stat, pokeType } = props
 
   return (
     <div className="bg-neutral-600 h-48 w-[20rem] rounded-lg">
@@ -178,16 +178,16 @@ export const PokeRangeStat = (props) => {
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
 PokeRangeStat.propTypes = {
   stat: PropTypes.object.isRequired,
   pokeType: PropTypes.string,
-};
+}
 
 export const StatBar = (props) => {
-  const { label, value, max, color } = props;
+  const { label, value, max, color } = props
 
   return (
     <div className="w-10">
@@ -204,18 +204,18 @@ export const StatBar = (props) => {
         {label}
       </div>
     </div>
-  );
-};
+  )
+}
 
 StatBar.propTypes = {
   label: PropTypes.string.isRequired,
   value: PropTypes.number,
   max: PropTypes.number.isRequired,
   color: PropTypes.string.isRequired,
-};
+}
 
 export const PokeAbility = (props) => {
-  const { abilities } = props;
+  const { abilities } = props
 
   return (
     <div className="">
@@ -238,15 +238,15 @@ export const PokeAbility = (props) => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
 PokeAbility.propTypes = {
   abilities: PropTypes.array,
-};
+}
 
 export const PokeEggGroups = (props) => {
-  const { eggGroups, loading } = props;
+  const { eggGroups, loading } = props
 
   const eggGroupNames = new Map([
     ["monster", "Monster"],
@@ -264,11 +264,11 @@ export const PokeEggGroups = (props) => {
     ["ditto", "Ditto"],
     ["dragon", "Dragon"],
     ["no-eggs", "No Eggs"],
-  ]);
+  ])
 
   const groupName = (eggGroupCode) => {
-    return eggGroupNames.get(eggGroupCode) || "Unknown";
-  };
+    return eggGroupNames.get(eggGroupCode) || "Unknown"
+  }
 
   return (
     <>
@@ -294,16 +294,16 @@ export const PokeEggGroups = (props) => {
         )}
       </div>
     </>
-  );
-};
+  )
+}
 
 PokeEggGroups.propTypes = {
   eggGroups: PropTypes.array,
   loading: PropTypes.bool,
-};
+}
 
 export const PokeEvoChain = (props) => {
-  const { evolutionChain, loading } = props;
+  const { evolutionChain, loading } = props
 
   return (
     <>
@@ -324,82 +324,82 @@ export const PokeEvoChain = (props) => {
         </>
       )}
     </>
-  );
-};
+  )
+}
 
 PokeEvoChain.propTypes = {
   evolutionChain: PropTypes.object,
   loading: PropTypes.bool,
-};
+}
 
 const PokeEvoDiagram = (props) => {
-  const { evoChain } = props;
+  const { evoChain } = props
 
   const evoTrigger = (evoDetail, name) => {
-    let triggers = [];
+    let triggers = []
 
     if (evoDetail?.trigger?.name === "level-up") {
       if (evoDetail?.min_happiness !== null) {
-        triggers.push(`High friendship`);
+        triggers.push(`High friendship`)
       }
       if (evoDetail?.min_level !== null) {
-        triggers.push(`Level ${evoDetail?.min_level}`);
+        triggers.push(`Level ${evoDetail?.min_level}`)
       }
       if (evoDetail?.min_beauty !== null) {
-        triggers.push(`High beauty`);
+        triggers.push(`High beauty`)
       }
       if (evoDetail?.min_affection !== null) {
-        triggers.push(`High affection`);
+        triggers.push(`High affection`)
       }
     }
 
     if (evoDetail?.trigger?.name === "use-item") {
-      triggers.push(`Use ${evoDetail?.item?.name}`);
+      triggers.push(`Use ${evoDetail?.item?.name}`)
 
-      let gender = evoDetail?.gender;
+      let gender = evoDetail?.gender
       if (gender !== null) {
-        triggers.push(`Gender ${gender === 1 ? "Female" : "Male"}`);
+        triggers.push(`Gender ${gender === 1 ? "Female" : "Male"}`)
       }
     }
 
     if (evoDetail?.trigger?.name === "trade") {
-      triggers.push(`Trade`);
+      triggers.push(`Trade`)
     }
 
     if (evoDetail?.trigger?.name === "shed") {
-      triggers.push(`Shed`);
+      triggers.push(`Shed`)
     }
 
     if (evoDetail?.trigger?.name === "other") {
-      triggers.push(`Other`);
+      triggers.push(`Other`)
     }
 
     switch (evoDetail?.time_of_day) {
       case "day":
-        triggers.push(` in day time`);
-        break;
+        triggers.push(` in day time`)
+        break
       case "night":
-        triggers.push(` in night time`);
-        break;
+        triggers.push(` in night time`)
+        break
       default:
-        break;
+        break
     }
 
     if (name === "leafeon" || name === "glaceon") {
       triggers.push(
         `Use ${name === "leafeon" ? "Leaf\u00A0stone" : "Ice\u00A0stone"}`
-      );
+      )
       triggers.push(
         `or level up near an ${
           name === "leafeon" ? "Moss\u00A0Rock" : "Ice\u00A0Rock"
         }`
-      );
+      )
     }
 
     if (name === "sylveon") {
-      triggers = [];
-      triggers.push(`Level up with high friendship`);
-      triggers.push(`and know a Fairy-type move`);
+      triggers = []
+      triggers.push(`Level up with high friendship`)
+      triggers.push(`and know a Fairy-type move`)
     }
 
     return (
@@ -408,8 +408,8 @@ const PokeEvoDiagram = (props) => {
           <div key={index}>{trigger}</div>
         ))}
       </div>
-    );
-  };
+    )
+  }
 
   return (
     <div className="flex items-center">
@@ -472,54 +472,54 @@ const PokeEvoDiagram = (props) => {
           : null}
       </div>
     </div>
-  );
-};
+  )
+}
 
 PokeEvoDiagram.propTypes = {
   species: PropTypes.object,
   evoChain: PropTypes.object,
-};
+}
 
 export const PokeCardMini = (props) => {
-  const { pokeId, pokeName } = props;
+  const { pokeId, pokeName } = props
 
-  const [pokemon, setPokemon] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [pokemon, setPokemon] = useState([])
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    let abortController = new AbortController();
+    let abortController = new AbortController()
 
     const fetchPokeType = async () => {
       try {
-        setLoading(true);
+        setLoading(true)
         const res = await axios.get(
           `https://pokeapi.co/api/v2/pokemon/${pokeId}`,
           {
             signal: abortController.signal,
           }
-        );
-        setPokemon(res.data);
+        )
+        setPokemon(res.data)
       } catch (error) {
         if (!axios.isCancel(error))
-          console.error("Something went wrong, ", error);
+          console.error("Something went wrong, ", error)
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-    };
+    }
 
-    fetchPokeType();
+    fetchPokeType()
 
     return () => {
-      abortController.abort();
-    };
-  }, [pokeId]);
+      abortController.abort()
+    }
+  }, [pokeId])
 
   return (
     <div className="flex flex-col items-center gap-1 w-20">
       <div className="bg-neutral-800 w-20 h-20 flex flex-col justify-center items-center rounded-lg">
         {!loading && !pokemon?.sprites?.front_default ? (
           <div className="w-20 h-20 flex justify-center items-center">
-            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-neutral-300"></div>
+            <span className="loading loading-dots loading-md"></span>
           </div>
         ) : (
           <img
@@ -543,19 +543,19 @@ export const PokeCardMini = (props) => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
 PokeCardMini.propTypes = {
   pokeId: PropTypes.string,
   pokeName: PropTypes.string,
-};
+}
 
 export const PokeDescription = (props) => {
-  const { description, loading } = props;
+  const { description, loading } = props
 
   return (
-    <fieldset className="min-h-[6.25rem] border-[1px] border-neutral-500 rounded-lg">
+    <fieldset className="relative min-h-[6.25rem] border-[1px] border-neutral-500 rounded-lg">
       <legend className="text-sm text-neutral-400 font-semibold px-1 ml-1">
         Description
       </legend>
@@ -564,15 +564,15 @@ export const PokeDescription = (props) => {
           <span className="loading loading-bars loading-md"></span>
         </div>
       ) : (
-        <div className="text-sm text-neutral-300 font-semibold text-center whitespace-pre-wrap mb-4">
+        <div className="text-sm text-neutral-300 font-semibold text-center line-clamp-2 inset-2">
           {description}
         </div>
       )}
     </fieldset>
-  );
-};
+  )
+}
 
 PokeDescription.propTypes = {
   description: PropTypes.string,
   loading: PropTypes.bool,
-};
+}

@@ -1,45 +1,45 @@
-import axios from "axios";
-import { useCallback, useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import { PokeType } from "./PokeInfo";
+import axios from "axios"
+import { useCallback, useEffect, useState } from "react"
+import PropTypes from "prop-types"
+import { PokeType } from "./InfoWidget"
 
 export const PokeFetchCard = (props) => {
-  const { url, onClick } = props;
+  const { url, onClick } = props
 
-  const [pokemon, setPokemon] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [pokemon, setPokemon] = useState(null)
+  const [loading, setLoading] = useState(true)
 
   const loadPokemon = useCallback(async () => {
-    let abortController = new AbortController();
+    let abortController = new AbortController()
 
     try {
-      setLoading(true);
+      setLoading(true)
       const res = await axios.get(url, {
         signal: abortController.signal,
-      });
-      setPokemon(res.data);
+      })
+      setPokemon(res.data)
     } catch (error) {
       if (!axios.isCancel(error)) {
-        throw error;
+        throw error
       }
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
 
     return () => {
-      abortController.abort();
-    };
-  }, [url]);
+      abortController.abort()
+    }
+  }, [url])
 
   useEffect(() => {
-    loadPokemon();
-  }, [loadPokemon]);
+    loadPokemon()
+  }, [loadPokemon])
 
   return (
     <div
       className={`${
         onClick ? "cursor-pointer" : ""
-      } w-[10rem] h-[12rem] md:w-[15rem] flex flex-col justify-center items-center bg-neutral-700 border-2 border-neutral-600 rounded-xl`}
+      } w-[10rem] h-[12rem] md:w-[15rem] flex flex-col justify-center items-center bg-neutral-700 border-2 border-neutral-600 rounded`}
       onClick={onClick}
     >
       {loading ? (
@@ -85,10 +85,10 @@ export const PokeFetchCard = (props) => {
         </>
       )}
     </div>
-  );
-};
+  )
+}
 
 PokeFetchCard.propTypes = {
   url: PropTypes.string.isRequired,
   onClick: PropTypes.func,
-};
+}

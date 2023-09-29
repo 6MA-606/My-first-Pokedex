@@ -1,9 +1,9 @@
-import { ArrowUp, ChevronLeft, ChevronRight, ShinyIcon } from "./Icon";
-import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import { ArrowUp, ChevronLeft, ChevronRight, ShinyIcon } from "./Icon"
+import PropTypes from "prop-types"
+import { useEffect, useState } from "react"
 
 export const PokeButton = (props) => {
-  const { type, onClick, loading, pokemon } = props;
+  const { type, onClick, loading, pokemon } = props
 
   return (
     <button
@@ -14,7 +14,7 @@ export const PokeButton = (props) => {
     >
       <div className="w-[40px] h-[40px] overflow-visible flex items-center justify-center">
         {loading ? (
-          <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-neutral-300"></div>
+          <span className="loading loading-spinner loading-md"></span>
         ) : (
           <img
             className="scale-[1.5]"
@@ -31,18 +31,18 @@ export const PokeButton = (props) => {
         {type == "next" ? <ChevronRight /> : <ChevronLeft />}
       </div>
     </button>
-  );
-};
+  )
+}
 
 PokeButton.propTypes = {
   type: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
   loading: PropTypes.bool,
   pokemon: PropTypes.object,
-};
+}
 
 export const PokeButtonMini = (props) => {
-  const { type, onClick, loading, pokemon } = props;
+  const { type, onClick, loading, pokemon } = props
 
   return (
     <button
@@ -64,18 +64,18 @@ export const PokeButtonMini = (props) => {
         {type == "next" ? <ChevronRight /> : null}
       </div>
     </button>
-  );
-};
+  )
+}
 
 PokeButtonMini.propTypes = {
   type: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
   loading: PropTypes.bool,
   pokemon: PropTypes.object,
-};
+}
 
 export const ShinyButton = (props) => {
-  const { isShiny, onClick, className } = props;
+  const { isShiny, onClick, className } = props
 
   return (
     <button
@@ -91,31 +91,31 @@ export const ShinyButton = (props) => {
         className={`${!isShiny ? "fill-neutral-400" : "fill-yellow-50"}`}
       />
     </button>
-  );
-};
+  )
+}
 
 ShinyButton.propTypes = {
   isShiny: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
   className: PropTypes.string,
-};
+}
 
 export const BackToTopButton = () => {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(false)
 
   const handleBackToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  }
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
       if (window.scrollY > 100) {
-        setShow(true);
+        setShow(true)
       } else {
-        setShow(false);
+        setShow(false)
       }
-    });
-  }, []);
+    })
+  }, [])
 
   return (
     <div
@@ -126,11 +126,11 @@ export const BackToTopButton = () => {
     >
       <ArrowUp />
     </div>
-  );
-};
+  )
+}
 
 export const PokePageButton = (props) => {
-  const { type, onClick, loading } = props;
+  const { type, onClick, loading } = props
 
   return (
     <button
@@ -155,11 +155,11 @@ export const PokePageButton = (props) => {
         </>
       )}
     </button>
-  );
-};
+  )
+}
 
 PokePageButton.propTypes = {
   type: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
   loading: PropTypes.bool,
-};
+}

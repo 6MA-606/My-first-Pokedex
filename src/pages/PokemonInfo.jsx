@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
-import axios from "axios";
+import { useCallback, useEffect, useState } from "react"
+import axios from "axios"
 import {
   PokeAbility,
   PokeDescription,
@@ -8,142 +8,143 @@ import {
   PokePolygonStat,
   PokeRangeStat,
   PokeType,
-} from "../components/PokeInfo";
-import { RevolvingDot } from "react-loader-spinner";
+} from "../components/InfoWidget"
 import {
   BackToTopButton,
   PokeButton,
   PokeButtonMini,
   ShinyButton,
-} from "../components/Button";
-import { useNavigate, useParams } from "react-router-dom";
+} from "../components/Button"
+import { useNavigate, useParams } from "react-router-dom"
+import { GitHubAccount } from "../components/SocialWidget"
 
-function PokemonInfoPage() {
-  const { pokeId } = useParams();
-  const navigate = useNavigate();
+function PokemonInfo() {
+  const { pokeId } = useParams()
+  const navigate = useNavigate()
 
-  const [loading, setLoading] = useState(false);
-  const [pokemon, setPokemon] = useState(null);
-  const [nextPokemon, setNextPokemon] = useState(null);
-  const [previousPokemon, setPreviousPokemon] = useState(null);
-  const [species, setSpecies] = useState(null);
-  const [evoUrl, setEvoUrl] = useState(null);
-  const [evolutionChain, setEvolutionChain] = useState(null);
-  const [shiny, setShiny] = useState(false);
-  const [id, setId] = useState(parseInt(pokeId) || 1);
-  const [description, setDescription] = useState("");
+  const [loading, setLoading] = useState(false)
+  const [pokemon, setPokemon] = useState(null)
+  const [nextPokemon, setNextPokemon] = useState(null)
+  const [previousPokemon, setPreviousPokemon] = useState(null)
+  const [species, setSpecies] = useState(null)
+  const [evoUrl, setEvoUrl] = useState(null)
+  const [evolutionChain, setEvolutionChain] = useState(null)
+  const [shiny, setShiny] = useState(false)
+  const [id, setId] = useState(parseInt(pokeId) || 1)
+  const [description, setDescription] = useState("")
 
   const loadPokemon = useCallback(async () => {
-    let abortController = new AbortController();
+    let abortController = new AbortController()
 
     const loadPokemon = async () => {
       try {
-        setLoading(true);
+        setLoading(true)
 
         let res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`, {
           signal: abortController.signal,
-        });
-        setPokemon(res.data);
+        })
+        setPokemon(res.data)
 
         res = await axios.get(
           `https://pokeapi.co/api/v2/pokemon-species/${id}`,
           {
             signal: abortController.signal,
           }
-        );
-        setSpecies(res.data);
+        )
+        setSpecies(res.data)
 
         if (id < 905) {
           res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id + 1}`, {
             signal: abortController.signal,
-          });
-          setNextPokemon(res.data);
+          })
+          setNextPokemon(res.data)
         }
 
         if (id > 1) {
           res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id - 1}`, {
             signal: abortController.signal,
-          });
-          setPreviousPokemon(res.data);
+          })
+          setPreviousPokemon(res.data)
         }
       } catch (error) {
         if (!axios.isCancel(error)) {
-          console.error("Something went wrong, ", error);
+          console.error("Something went wrong, ", error)
         }
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-    };
+    }
 
-    loadPokemon();
+    loadPokemon()
 
-    return () => abortController.abort();
-  }, [id]);
+    return () => abortController.abort()
+  }, [id])
 
   const loadEvoChain = useCallback(async () => {
     if (evoUrl) {
-      let abortController = new AbortController();
+      let abortController = new AbortController()
 
       const loadEvoChain = async () => {
         try {
-          setLoading(true);
+          setLoading(true)
           let res = await axios.get(evoUrl, {
             signal: abortController.signal,
-          });
-          setEvolutionChain(res.data);
+          })
+          setEvolutionChain(res.data)
         } catch (error) {
           if (!axios.isCancel(error)) {
-            console.error("Something went wrong, ", error);
+            console.error("Something went wrong, ", error)
           }
         } finally {
-          setLoading(false);
+          setLoading(false)
         }
-      };
+      }
 
-      loadEvoChain();
+      loadEvoChain()
 
-      return () => abortController.abort();
+      return () => abortController.abort()
     }
-  }, [evoUrl]);
+  }, [evoUrl])
 
   useEffect(() => {
-    loadPokemon();
-  }, [loadPokemon]);
+    loadPokemon()
+  }, [loadPokemon])
 
   useEffect(() => {
     if (species) {
-      let url = species.evolution_chain.url;
-      setEvoUrl(url);
+      let url = species.evolution_chain.url
+      setEvoUrl(url)
     }
-  }, [species]);
+  }, [species])
 
   useEffect(() => {
-    loadEvoChain();
-  }, [loadEvoChain]);
+    loadEvoChain()
+  }, [loadEvoChain])
 
   useEffect(() => {
     if (species) {
       let flavor = species.flavor_text_entries.filter(
         (entry) => entry.language.name === "en"
-      );
-      setDescription(flavor[flavor.length - 1].flavor_text);
+      )
+      setDescription(flavor[flavor.length - 1].flavor_text)
     }
-  }, [species]);
+  }, [species])
 
-  const handleNextClick = () => {
-    if (id < 905) setId((prevId) => prevId + 1);
-    // redirect(`/info/${id + 1}`);
+  const handleNextClick = (e) => {
+    e.preventDefault()
+    if (id < 905) setId((prevId) => prevId + 1)
     navigate(`/info/${id + 1}`, {
       replace: true,
-    });
-  };
+    })
+  }
 
-  const handlePreviousClick = () => {
-    if (id > 1) setId((prevId) => prevId - 1);
+  const handlePreviousClick = (e) => {
+    e.preventDefault()
+    if (id > 1) setId((prevId) => prevId - 1)
     navigate(`/info/${id - 1}`, {
       replace: true,
-    });
-  };
+    })
+  }
 
   return (
     <div className="bg-neutral-800 min-h-screen pt-10 pb-10 xl:p-0 flex flex-col xl:flex-row gap-6 items-center justify-center">
@@ -179,15 +180,7 @@ function PokemonInfoPage() {
             >
               <div className="w-full h-full absolute flex items-center justify-center">
                 {loading ? (
-                  <RevolvingDot
-                    radius="70"
-                    color="#ff0000"
-                    secondaryColor=""
-                    ariaLabel="revolving-dot-loading"
-                    wrapperStyle={{}}
-                    wrapperClass=""
-                    visible={true}
-                  />
+                  <span className="loading loading-spinner loading-lg"></span>
                 ) : (
                   <>
                     <img
@@ -218,7 +211,7 @@ function PokemonInfoPage() {
                         {pokemon?.name.split("-")[0]}
                       </div>
                       <div className="text-[2rem] font-semibold text-neutral-400 drop-shadow-lg">
-                        #{pokemon?.id.toString().padStart(3, "0")}
+                        {"#" + pokemon?.id.toString().padStart(3, "0")}
                       </div>
                     </div>
                     <div>
@@ -384,11 +377,16 @@ function PokemonInfoPage() {
         )}
       </div>
       <BackToTopButton />
-      <div className="my-5 xl:m-0 xl:absolute xl:bottom-5 xl:right-5 text-[1rem] xl:text-[0.75rem] text-neutral-300 font-semibold">
-        {"Made by Shingetsu."}
-      </div>
+      <GitHubAccount
+        username={"6MA-606"}
+        className={
+          "my-5 xl:m-0 xl:absolute xl:bottom-5 xl:right-5 text-[1rem] xl:text-[0.75rem]"
+        }
+      >
+        {"Made by 6MA-606"}
+      </GitHubAccount>
     </div>
-  );
+  )
 }
 
-export default PokemonInfoPage;
+export default PokemonInfo

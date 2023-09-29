@@ -1,7 +1,7 @@
-import PropTypes from "prop-types";
+import PropTypes from "prop-types"
 
 const PageNav = (props) => {
-  const { currentPage, onChangePage } = props;
+  const { currentPage, onChangePage } = props
 
   return (
     <>
@@ -43,12 +43,12 @@ const PageNav = (props) => {
         </>
       ) : null}
     </>
-  );
-};
+  )
+}
 
 PageNav.propTypes = {
   currentPage: PropTypes.number.isRequired,
   onChangePage: PropTypes.func.isRequired,
-};
+}
 
-export default PageNav;
+export default PageNav
