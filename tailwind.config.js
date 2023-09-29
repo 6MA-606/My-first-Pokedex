@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -8,9 +9,11 @@ export default {
     extend: {
       dropShadow: {
         "text": "1.5px 1.5px 0px #0004",
+        "glow-red": "0px 0px 10px red",
       },
       backgroundImage: {
-        "gradient-radial": "radial-gradient(rgba(20,20,20,1) 40%, rgba(0,0,0,0) 70%)"
+        "gradient-radial": "radial-gradient(rgba(20,20,20,1) 40%, rgba(0,0,0,0) 70%)",
+        "pokeball": "url('/pokeball-bg.svg')",
       },
       colors: {
         transparent: "transparent",
@@ -20,7 +23,7 @@ export default {
           "fighting": "#bb5544",
           "flying": "#8899ff",
           "poison": "#aa5599",
-          "ground": "#ddbb55",  
+          "ground": "#ddbb55",
           "rock": "#bbaa66",
           "bug": "#aabb22",
           "ghost": "#6666bb",
@@ -90,6 +93,8 @@ export default {
     "bg-egg-dragon",
     "bg-egg-no-eggs",
   ],
-  plugins: [],
+  plugins: [
+    require('daisyui'),
+  ],
 }
 
